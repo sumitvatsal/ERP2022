@@ -1,0 +1,509 @@
+﻿
+@{
+    ViewBag.Title = "FeeCategory";
+     Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    //  Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<script type="text/javascript">
+    var sessionStorage_transfer = function (event) {
+        if (!event) { event = window.event; } // ie suq
+        if (!event.newValue) return;          // do nothing if no value to work with
+        if (event.key == 'getSessionStorage') {
+            // another tab asked for the sessionStorage -> send it
+            localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+            // the other tab should now have it, so we're done with it.
+            localStorage.removeItem('sessionStorage'); // <- could do short timeout as well.
+        } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+            // another tab sent data <- get it
+            var data = JSON.parse(event.newValue);
+            for (var key in data) {
+                sessionStorage.setItem(key, data[key]);
+            }
+        }
+    };
+    if (window.addEventListener) {
+        window.addEventListener("storage", sessionStorage_transfer, false);
+    } else {
+        window.attachEvent("onstorage", sessionStorage_transfer);
+    };
+
+
+    // Ask other tabs for session storage (this is ONLY to trigger event)
+    if (!sessionStorage.length) {
+        localStorage.setItem('getSessionStorage', 'foobar');
+        localStorage.removeItem('getSessionStorage', 'foobar');
+    };
+</script>
+
+<link href="~/css/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+
+<link href="~/css/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<script src="~/css/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/css/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="~/css/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script type="text/javascript">
+     $(document).ready(function () {
+         $('.select2').select2();
+     })
+
+</script>
+<section class="content">
+    <div class="box box-solid">
+        <div class="et">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Fee Category Head</h3>
+
+            </div>
+        </div>
+        <div class="alert alert-success alert-dismissible centerSuccess" id="divsuccesmsg" style="display:none">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i>
+                success! <span Id="spsuccessMsg"></span>
+            </h4>
+
+        </div>
+
+        <div class="box-body">
+            <div class="row">
+
+                <div class="content">
+
+
+
+                    <div class="row">
+                        <form role="form" id="form1" name="form1">
+                            <div class="col-sm-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Fee Category</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="panel-body">
+                                           
+                                                <div class="form-group">
+                                                    <label for="Country" class="req">School<span class="requird">*</span></label>
+                                                    <select class="form-control" id="ddlSchoolName" ng-model="ddlSchoolName1" valuefield="Id" textfield="Name" @*blankRowValue="0" blankRowText="--Select--"*@></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="req" for="Salarydetails_unit">Category <span class="requird">*</span></label>
+                                                <input class="form-control" id="txtCategory" name="txtCategory" type="text" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="req" for="Salarydetails_unit">Description</label>
+                                                <input class="form-control" id="txtDesc" type="text" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <div class="form_sep">
+                                                    <input class="btn btn-info" id="btnSumit" type="button" value="Save">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="col-sm-8">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Category Heads List</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="form-group">
+
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>School</th>
+                                                        <th>Category</th>
+                                                        <th>Description</th>
+                                                        <th>Status</th>
+                                                        <th>Edit</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tBodyHW"></tbody>
+                                            </table>
+
+                                            <script type="text/html" id="divEmployeeDetailsJTemplte">
+                                                {#foreach $T as Datashort}
+                                                <tr>
+                                                    <td>
+                                                        { $T.Datashort.count}
+                                                    </td>
+                                                    <td>
+                                                        {$T.Datashort.School}
+                                                    </td>
+                                                    <td>
+                                                        { $T.Datashort.ct.FeeCategory}
+                                                    </td>
+                                                    <td>
+                                                        { $T.Datashort.ct.Cat_Desc}
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        <span class="{ $T.Datashort.style}" title="Activate/Iactivate" onclick="EditStatus({ $T.Datashort.ct.ID},'{ $T.Datashort.ct.FeeCategory}','{ $T.Datashort.ct.Cat_Desc}',{ $T.Datashort.ct.Status},{ $T.Datashort.ct.SchoolID})">{ $T.Datashort.StatusNm} </span>
+                                                    </td>
+                                                    <td>
+                                                        <i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="Edit({ $T.Datashort.ct.ID},'{ $T.Datashort.ct.FeeCategory}','{ $T.Datashort.ct.Cat_Desc}','{ $T.Datashort.ct.Status}',{ $T.Datashort.ct.SchoolID})" title="Edit"></i>
+                                                    </td>
+                                                    <td>
+                                                        <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete({ $T.Datashort.ct.ID})" title="Delete"></i>
+    
+                                                    </td>
+                                                </tr>
+                                                {#/for}
+                                            </script>
+                                            <input type="hidden" id="hdnID" />
+                                            <input type="hidden" id="hdnStatus" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //callServiceMethodForDDl("", "/api/Default", "getAllSchoolName", "ddlSchoolName", false, "", "", "", "");
+        var loginuser = (sessionStorage.getItem("userId"));
+        var typeuser = sessionStorage.getItem("type");
+        callServiceMethodForDDl(JSON.stringify([loginuser, typeuser]), "/api/Default", "getAllSchoolName", "ddlSchoolName", false, "", "", "", "");
+
+        setControlValue("hdnID", 0);
+        setControlValue("hdnStatus", 1);
+        $('.dtpicker').datepicker({
+            //dateFormat: 'dd/mm/yy' ,
+            autoclose: true,
+            format:'dd/mm/yyyy'
+        });
+
+        fillDataTable();
+
+        var ID=getQuerystring("id");
+        if (typeof (ID) != "undefined") {
+            setControlValue("hdn", ID);//
+
+            GetValues(ID);
+
+        }
+
+        //callServiceMethodForDDl("", "/api/StudentApi", "GetLeaveStatus", "ddlReqStatus", false, "", "", "", "");
+    });
+    function openModal()
+    {
+        $('#myModal').modal('show');
+    }
+
+    function GetValues(ID)
+    {
+        $.ajax({
+            url: "/api/TimeTableApi/GetClassTiming",
+            type: "Post",
+            data: JSON.stringify([ID]),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if(data.ID!=-1)
+                {
+                    setControlValue("hdn", data.ID);
+                    setControlValue("CTName", data.ct.Name);
+                    setControlValue("CTName1", data.ct.Name);
+                    setControlValue("Desc", data.ct.Description);
+
+                    fillDataTable(data.ID);
+                }
+            }
+        });
+    }
+
+    function fillDataTable() {
+        $("#loader").fadeIn();
+        var bank=getControlValue("txtCategory");
+        var alias = getControlValue("txtDesc");
+        var SchoolID = getControlValue("ddlSchoolName");
+        var loginuser = (sessionStorage.getItem("userId"));
+        var typeuser = sessionStorage.getItem("type");
+        var t = $('#example1').DataTable();
+        t.destroy();
+        callJTemplateServiceMethod(JSON.stringify(["FeeCategory", bank, alias, -1, SchoolID, loginuser, typeuser]), "/api/FeesApi", "getList",
+           "tBodyHW", "divEmployeeDetailsJTemplte", true, successMsg, "", "", "");
+    }
+
+    function successMsg(p1, p2, p3, datas) {
+       
+        $("#loader").fadeOut();
+    
+        setTimeout(function () {
+            $('#example1').DataTable({
+               
+                dom: 'lBfrtip',
+                bRetrieve: true,
+                bDestroy: true,
+                'columnDefs': [{
+                    "targets": -1,
+                    "orderable": false
+                }],
+            });
+        }, 1000);
+    }
+
+    //
+    $("#btnSearch").click(function () {
+        fillDataTable();
+    });
+
+    $("#btnSumit").click(function () {
+
+        var ID=getControlValue("hdnID");
+        var cat = getControlValue("txtCategory");
+        var des = getControlValue("txtDesc");
+        var status = getControlValue("hdnStatus");
+        var SchoolID = getControlValue("ddlSchoolName")
+        Save(ID, cat, des, status,SchoolID);
+    });
+
+    function Save(ID, Bank, alias, status, SchoolID)
+    {
+       
+        if ($("#form1").valid()) {
+            $("#loader").fadeIn();
+            $.ajax({
+                url: "/api/FeesApi/SaveRecord",
+                type: "Post",
+                data: JSON.stringify(["FeeCategory", ID, Bank, alias, status, SchoolID]),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#loader").fadeOut();
+                    if(data==1)
+                    {
+                        $("#divsuccesmsg").fadeIn();
+                        
+                        $("#spsuccessMsg").html("Fee Category Added Successfully ");
+                        setTimeout(function(){
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        },2000)
+ 
+                    }
+                    else if (data == 2) {
+                        $("#divsuccesmsg").fadeIn();
+                        
+                        $("#spsuccessMsg").html("Fee Category Updated Successfully ");
+                        setTimeout(function() {
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        }, 2000)
+
+                    }
+                    else if (data == -1)
+                    {
+                        $("#divsuccesmsg").fadeIn();
+
+                        $("#spsuccessMsg").html("Fee Category name already Exist");
+                        setTimeout(function () {
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        }, 2000)
+                    }
+                    else{
+                        alert("Some Error!!");
+                    }
+                    ResetModal();
+                    fillDataTable();
+                    //$('#myModal').modal('hide');
+                    
+                }
+            });
+        
+        }
+    }
+
+    function Save1(ID, Bank, alias, status, SchoolID) {
+
+       
+            $("#loader").fadeIn();
+            $.ajax({
+                url: "/api/FeesApi/SaveRecord",
+                type: "Post",
+                data: JSON.stringify(["FeeCategory", ID, Bank, alias, status, SchoolID]),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#loader").fadeOut();
+                    if (data == 1) {
+                        $("#divsuccesmsg").fadeIn();
+
+                        $("#spsuccessMsg").html("Fee Category Added Successfully ");
+                        setTimeout(function () {
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        }, 2000)
+
+                    }
+                    else if (data == 2) {
+                        $("#divsuccesmsg").fadeIn();
+
+                        $("#spsuccessMsg").html("Fee Category Updated Successfully ");
+                        setTimeout(function () {
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        }, 2000)
+
+                    }
+                    else if (data == -1) {
+                        $("#divsuccesmsg").fadeIn();
+
+                        $("#spsuccessMsg").html("Fee Category name already Exist");
+                        setTimeout(function () {
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        }, 2000)
+                    }
+                    else {
+                        alert("Some Error!!");
+                    }
+                    ResetModal();
+                    fillDataTable();
+                    //$('#myModal').modal('hide');
+
+                }
+            });
+
+        
+    }
+
+    function EditStatus(id,bank,alias,status,SchoolID)
+    {
+        var st=0;
+        status==false?st=1:st=0;
+        Save1(id,bank,alias,st,SchoolID);
+    }
+
+    function Edit(id, bank, alias, status, SchoolID)
+    {
+        setControlValue("hdnID", id);
+        setControlValue("txtCategory", bank);
+        setControlValue("txtDesc", alias);
+        if(status){
+            setControlValue("hdnStatus", 1);
+        }
+        else{
+            setControlValue("hdnStatus", 0);
+        }
+        setControlValue("ddlSchoolName",SchoolID)
+
+        //openModal();
+    }
+
+    function ViewDetails(id,name,status,statusNm,course,fromDt,Edt,weekdays,timing)
+    {
+        setControlValue("spName", name);
+        setControlValue("spCourse", course);
+        setControlValue("spWeekDays", weekdays);
+        setControlValue("spClassTiming", timing);
+        setControlValue("spStDt", fromDt);
+        setControlValue("spEdDt", Edt);
+        if(status==1)
+        {
+            $("#spActive").show();
+            $("#spInactive").hide();
+            setControlValue("spActive", statusNm);
+        }
+        else
+        {
+            $("#spActive").hide();
+            $("#spInactive").show();
+            setControlValue("spInactive", statusNm);
+        }
+        openModal();
+    }
+
+    function ResetAll()
+    {
+        setControlValue("txtSearchBank", "");
+        setControlValue("txtSearchAlias","");
+        fillDataTable();
+    }
+
+    function ResetModal()
+    {
+        setControlValue("txtCategory", "");
+        setControlValue("txtDesc","");
+        setControlValue("hdnID", 0);
+        setControlValue("hdnStatus", 0);
+        //setControlValue("ddlSchoolName", 0);
+    }
+
+    function Delete(id)
+    {
+        var result = window.confirm('Are you sure,you want to Delete this record?');
+        if (result == true) {
+            $.ajax({
+                url: "/api/FeesApi/DeleteRecord",
+                type: "Post",
+                data: JSON.stringify([id,"FeeCategory"]),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if(data==1){
+                        $("#divsuccesmsg").fadeIn();
+                        
+                        $("#spsuccessMsg").html("Record successfully deleted");
+                        setTimeout(function(){
+                            $("#divsuccesmsg").fadeOut();
+                            $("#spsuccessMsg").html("");
+                        },2000)
+                        ResetModal();
+                        fillDataTable()
+                    }
+                }
+            });
+        }
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#form1").validate({
+            errorClass: "my-error-class",
+            validClass: "my-valid-class",
+            rules: {
+
+                txtCategory: "required",
+
+            },
+            messages: {
+                txtCategory: "Please Enter Fee Category",
+               // txtCoursecoursecode: "Please Enter Class Code"
+
+            }
+        })
+        jQuery.validator.addMethod('selectcheck', function (value) {
+            if (value == "0") {
+                return (value != '0');
+            }
+            else if (value == "? undefined:undefined ?")
+            {
+                return (value != '? undefined:undefined ?');
+            }
+            else {
+                return true;
+            }
+
+        }, "Please Select Country");
+
+
+    });
+</script>
