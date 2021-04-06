@@ -48,6 +48,10 @@ namespace SchoolErp.Controllers
         {
             return View();
         }
-       
+        public ActionResult SectionDetails()
+        {
+            return View();
+        }
+
     }
 }

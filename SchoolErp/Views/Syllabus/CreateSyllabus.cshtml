@@ -102,17 +102,10 @@
         <form role="form" id="form1" name="form1">
             <input type="hidden" id="hdn">
             <div class="box-body">
-               
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group field-assignment-assignment_academic_year_id required">
-                            <label class="control-label" for="assignment-assignment_academic_year_id">Academic Year <span class="requird">*</span></label>
-                            <select id="tc_academic_year" name="tc_academic_year" class="form-control" valuefield="ID" textfield="StartYear" onchange="" aria-required="true"></select>
 
-                            <div class="help-block"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
+                <div class="row">
+
+                    <div class="col-sm-6">
                         <div class="form-group field-empinfosearch-emp_designation_id">
                             <label for="Country" class="req">School<span class="requird">*</span></label>
                             <select class="form-control" id="ddlSchoolName" ng-model="ddlSchoolName" valuefield="Id" textfield="Name"></select>
@@ -120,27 +113,108 @@
                             <div class="help-block"></div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group field-assignment-assignment_academic_year_id required">
+                            <label class="control-label" for="assignment-assignment_academic_year_id">Academic Year <span class="requird">*</span></label>
+                            <select id="tc_academic_year" name="tc_academic_year" class="form-control" valuefield="ID" textfield="StartYear" onchange="" aria-required="true"></select>
 
-                    <div class="col-sm-4" style="display:none">
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
                         <div class="form-group field-assignment-assignment_course_id required">
                             <label class="control-label" for="assignment-assignment_course_id">Class <span class="requird">*</span></label>
                             <select class="form-control" id="ddlCourse" name="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
                             <div class="help-block"></div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group field-assignment-assignment_course_id required">
                             <label class="control-label" for="assignment-assignment_course_id">Section <span class="requird">*</span></label>
-                            <select class="form-control" id="ddlCourse" name="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                            <select class="form-control" id="ddlSection" name="ddlSection" valuefield="Id" textfield="SectionName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
                             <div class="help-block"></div>
                         </div>
                     </div>
+                    <div class="col-sm-3">
+
+                        <label class="control-label" for="assignment-assignment_course_id">Subject <span class="requird">*</span></label>
+                        <select id="ddl_subjects" name="ddl_subjects" class="form-control" aria-required="true" valuefield="ID" textfield="Subject" blankRowValue="-1" blankRowText="----Select----"></select>
+                        <div class="help-block"></div>
+                >    </div>
+                    <div class="col-sm-3">
+
+                        <label class="control-label" for="assignment-assignment_course_id">Teacher <span class="requird">*</span></label>
+                        <select id="ddl_employees" name="ddl_employees" class="form-control" aria-required="true" valuefield="ID" textfield="Msg" blankRowValue="-1" blankRowText="----Select----"></select>
+
+                        <div class="help-block"></div>
+                    </div>
+                 
+
+                       
+                       
 
 
+
+                        @*<div class="col-sm-6">
+                <div class="form-group field-assignment-assignment_desc required">
+                    <label class="control-label" for="assignment-assignment_desc">Description<span class="requird">*</span></label>
+                    <textarea id="assignment_desc" class="form-control" name="Assignment[assignment_desc]" aria-required="true"></textarea>
+
+                    <div class="help-block"></div>
                 </div>
-               
-               
+            </div>
+
+
+
+            <div class="col-sm-4">
+                <div class="form-group field-assignment-assignment_course_id required">
+                    <label class="control-label" for="assignment-assignment_course_id">Class <span class="requird">*</span></label>
+                    <select class="form-control" id="ddlCourse" name="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group field-assignment-assignment_course_id required">
+                    <label class="control-label" for="assignment-assignment_course_id">Section <span class="requird">*</span></label>
+                    <select class="form-control" id="ddlSection" name="ddlSection" valuefield="Id" textfield="SectionName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+
+                <label class="control-label" for="assignment-assignment_course_id">Teacher <span class="requird">*</span></label>
+                <select id="ddl_employees" name="ddl_employees" class="form-control" aria-required="true" valuefield="ID" textfield="Msg" blankRowValue="-1" blankRowText="----Select----"></select>
+
+                <div class="help-block"></div>
+            </div>*@
+
+
+
+                    </div>
+
+
                 <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group field-assignment-assignment_desc required">
+                            <label class="control-label" for="assignment-assignment_desc">Name of Book<span class="requird">*</span></label>
+                            <textarea id="txtNameofBook" class="form-control" name="NameofBook[txtNameofBook]" aria-required="true"></textarea>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group field-assignment-assignment_desc required">
+                            <label class="control-label" for="assignment-assignment_desc">Publication<span class="requird">*</span></label>
+                            <textarea id="txtPublication" class="form-control" name="Publication[Publication]" aria-required="true"></textarea>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group field-assignment-assignment_desc required">
+                            <label class="control-label" for="assignment-assignment_desc">ISBN Num<span class="requird">*</span></label>
+                            <textarea id="txtISBN" class="form-control" name="ISBN[txtISBN]" aria-required="true"></textarea>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
 
                     <div class="col-sm-6">
                         <div class="form-group field-assignment-assignment_desc required">
@@ -150,22 +224,36 @@
                             <div class="help-block"></div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group field-assignment-assignment_desc required">
+                            <label class="control-label" for="assignment-assignment_desc">About Syllabus(Chapter /Page Wise)<span class="requird">*</span></label>
+                            <textarea id="btnAboutSyllabus" class="form-control" name="AboutSyllabus[btnAboutSyllabus]" aria-required="true"></textarea>
+
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
 
 
-                    <div class="col-sm-6"style="display:none">
+                    <div class="col-sm-6" style="display:none">
                         <div class="form-group field-assignment-file required">
                             <label class="control-label" for="assignment-file">Assignment File</label>
-                            <input id="hdnFile" type="hidden" name="Assignment[file]" value=""><input type="file" id="inputFile" name="Assignment[file]"  aria-required="true" required>
+                            <input id="hdnFile" type="hidden" name="Assignment[file]" value=""><input type="file" id="inputFile" name="Assignment[file]" aria-required="true" required>
                             <div class="hint-block">NOTE : Upload only jpg, gif, png, pdf, txt, jpeg, doc, docx files and size must be less than 1MB.</div>
                             <div class="help-block"></div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+
+                </div>
 
             <div class="box-footer">
-                <button type="button" id="btnCreate" class="btn btn-primary btn-create">Create</button> <button type="button" id="btnEdit" class="btn btn-primary btn-create" style="display:none;">Edit</button>   	<a class="btn btn-default btn-create" href="/Syllabus/ViewSyllabus">View & Edit </a>
+                <button type="button" id="btnCreate" class="btn btn-primary btn-create">Save</button>
+                <button type="button" id="btnEdit" class="btn btn-primary btn-create" style="display:none;">Edit</button> 
+                <a class="btn btn-default btn-create" href="/Syllabus/ViewSyllabus">View & Edit </a>
             </div>
+          
+
             <div class="alert alert-success alert-dismissible centerSuccess" id="divsuccesmsg" style="display:none">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4>
@@ -187,14 +275,30 @@
             autoclose: true,
             format:'dd/mm/yyyy'
         });
-
-       var SchoolID = (sessionStorage.getItem("SchoolID"));
-        callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/TimeTableApi", "GetAcademicYearBySchoolActive", "tc_academic_year", false, "", "", "", "");
-     var SchoolID = (sessionStorage.getItem("SchoolID"));   
+        debugger;
+         var SchoolID = (sessionStorage.getItem("SchoolID"));
+         callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/TimeTableApi", "GetAcademicYearBySchoolActive", "tc_academic_year", false, "", "", "", "");
+         var SchoolID = (sessionStorage.getItem("SchoolID"));   
         callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/StudentApi", "GetClassesbySchoolID", "ddlCourse", false, "", "", "", "");
         var loginuser = (sessionStorage.getItem("userId"));
         var typeuser = sessionStorage.getItem("type");
         callServiceMethodForDDl(JSON.stringify([loginuser, typeuser]), "/api/Default", "getAllSchoolName", "ddlSchoolName", false, "", "", "", "");
+        var SchoolID = (sessionStorage.getItem("SchoolID"));
+        callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/TimeTableApi", "GetEmpsbySchoolID", "ddl_employees", false, "", "", "", "");
+        var SchoolID = sessionStorage.getItem("SchoolID");
+        callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/StudentApi", "GetClassesbySchoolID", "ddlCourse", false, "", "", "", "");
+        $("#ddlCourse").change(function () {
+            debugger;
+            var ddlCourse = getControlValue("ddlCourse");
+            if (ddlCourse != null && (ddlCourse != -1) && (ddlCourse != undefined)) {
+                var SchoolID = sessionStorage.getItem("SchoolID");
+                callServiceMethodForDDl(JSON.stringify([SchoolID, ddlCourse]), "/api/TimeTableApi", "GetSubjectsbySCHOOLidbyclass", "ddl_subjects", false, "", "", "", "");
+                callServiceMethodForDDl(JSON.stringify([SchoolID, ddlCourse]), "/api/TimeTableApi", "GetSectionbySCHOOLidbyclass", "ddlSection", false, "", "", "", "");
+             }
+          
+        });
+
+
      //    var SchoolID = (sessionStorage.getItem("SchoolID"));   
      //callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/TimeTableApi", "GetSubjectsbySCHOOLid", "ddl_subject", false, "", "", "", "");
 
@@ -229,9 +333,10 @@
 
     function GetValues(ID)
     {
+        debugger;
         //$("#tc_academic_year").attr("disabled", true);
         //$("#ddlCourse").attr("disabled", true);
-        $("#ddlSection").attr("disabled", true);
+        $("#ddlSection").attr("disabled", false);
         $("#assignment_name").attr("disabled", true);
         $("#ddl_subject").attr("disabled", true);
         $("#assignment_submit_date").attr("disabled", true);
@@ -248,11 +353,16 @@
                 {
                     setControlValue("tc_academic_year", data.hw.AcademicYear);
                     setControlValue("ddlCourse", data.hw.Class);
+                    setControlValue("ddlSection", data.hw.section);
+                    setControlValue("ddl_subjects", data.hw.subject);
+                    setControlValue("ddl_employees", data.hw.teacher);
+                     setControlValue("txtNameofBook", data.hw.N_book);
+                    setControlValue("txtPublication", data.hw.pub);
                    
-                   
-                    setControlValue("assignment_desc", data.hw.Description);
-                   
-                    setTimeout(function () {
+                    setControlValue("txtISBN", data.hw.isbnnum);
+                    setControlValue("btnAboutSyllabus", data.hw.btnAboutSyllabus);
+                     setControlValue("assignment_desc", data.hw.Description);
+                     setTimeout(function () {
                         
                     }, 2000);
                     $('#hdnFile').val(data.hw.FilePath);
@@ -275,7 +385,12 @@
 
     //
     $("#btnCreate").click(function () {
+        debugger;
         AssignHW(0);
+    });
+    $("#btnAddBook").click(function () {
+        debugger;
+        AddbookBy();
     });
 
     $("#btnEdit").click(function () {
@@ -314,14 +429,21 @@
 
     function AssignHW(id)
     {
-        if ($("#form1").valid()) {
-            $("#loader").fadeIn();
-            var empID = sessionStorage.getItem("EmpId");
-            var year = getControlValue("tc_academic_year");
-            var course = getControlValue("ddlCourse");           
-            var desc = getControlValue("assignment_desc");           
-            var SchoolID = (sessionStorage.getItem("SchoolID"));
-
+        debugger;
+        //if ($("#form1").valid()) {
+        //    //$("#loader").fadeIn();
+        var SchoolID = (sessionStorage.getItem("SchoolID"));
+        var empID = sessionStorage.getItem("EmpId");
+        var year = getControlValue("tc_academic_year");
+        var Class = getControlValue("ddlCourse");
+        var section = getControlValue("ddlSection");
+        var subject = getControlValue("ddl_subjects");
+        var teacher = getControlValue("ddl_employees");
+         var N_book = getControlValue("txtNameofBook");   
+        var pub = getControlValue("txtPublication");   
+        var isbnnum = getControlValue("txtISBN");           
+        var desc = getControlValue("assignment_desc");
+        var btnAboutSyllabus = getControlValue("btnAboutSyllabus");   
             //callJTemplateServiceMethod(JSON.stringify([year,course,section,name,desc,sub_Dt,sub,marks]), "/api/TimeTableApi", "SearchTimeTableConfig",
             //   "tbodyEmployeeDetails", "divEmployeeDetailsJTemplte", true, successMsg, "", "", "");
             var formData = new FormData();
@@ -332,15 +454,20 @@
                 if ($('#inputFile').val() == "") {
                     formData.append('path', getControlValue("hdnFile"));
                 }
-            }
-            formData.append('academicYr', year);
-            formData.append('class', course);
-            formData.append('desc', desc);
-            formData.append('empID', empID);
-            formData.append('SchoolID', SchoolID);
-           
-            $.ajax({
-
+        }
+        formData.append('SchoolID', SchoolID);
+        formData.append('empID', empID);
+        formData.append('academicYr', year);
+        formData.append('class', Class);
+        formData.append('section', section);
+        formData.append('subject', subject);
+        formData.append('teacher', teacher);
+        formData.append('N_book', N_book);
+        formData.append('pub', pub);
+        formData.append('isbnnum', isbnnum);
+        formData.append('desc', desc);
+        formData.append('btnAboutSyllabus', btnAboutSyllabus);
+           $.ajax({
                 type: "Post",
                 url: "@Url.Content("~/api/Syllabus1/CreateSyllabus")",         // url: "@@*Url.Content("~/api/HWapi/AssignHW")"*@*@*@
                 data: formData,
@@ -352,7 +479,6 @@
                     $("#loader").fadeOut();
                     if (data.ID != -1) {
                         $("#divsuccesmsg").fadeIn();
-
                         $("#spsuccessMsg").html("Syllabus Saved Successfully");
                         setTimeout(function () {
                             $("#divsuccesmsg").fadeOut();
@@ -364,9 +490,6 @@
                         clearfields();
                     }
                     else {
-
-                    
-
                         alert("Syllabus already exist for Selected Academic Year and Class ,You please go for Edit");
                        
                         //alert("Student record finally saved");
@@ -383,7 +506,7 @@
                   
               
             });
-        }
+        
     }
 
 
@@ -397,6 +520,18 @@
         //$("#tc_academic_year").val(-1);
         $("#assignment_desc").val("");
         $("#inputFile").val("");
+        $("#ddlCourse").val(-1);
+        $("#ddlSection").val(""); 
+        $("#ddl_subjects").val("");
+        $("#ddl_employees").val("");
+
+        $("#txtNameofBook").val("");
+        $("#txtPublication").val("");
+        $("#txtISBN").val("");
+        $("#inputFile").val("");
+        $("#inputFile").val("");
+        
+
         
     }
     function ViewDetails(id,name,status,statusNm,course,fromDt,Edt,weekdays,timing)
@@ -477,6 +612,12 @@
         }
     }
 
+    function AddbookBy() {
+        $("#bookpanal").show();
+        
+
+    }
+
     function GoToCreateTimeTable(x)
     {
         window.location.href = "/TimeTable/CreateTimeTable?id="+x;
@@ -503,6 +644,12 @@
                 tc_academic_year: {
                     selectcheck3: true
                 },
+                ddl_employees: {
+                    selectcheck4: true
+                },
+                ddl_subjects: {
+                    selectcheck5: true
+                },
                 assignment_name: "required",
 
             },
@@ -512,7 +659,8 @@
                 assignment_name: "Please Enter Assignment Name",
                 tc_academic_year:"Please Select Academic Year",
                 ddlCourse: "Please Select Class Name",
-
+                ddl_employees: "Please Select Teacher Name",
+                ddl_subjects: "Please Select Subject "
                // txtCoursecoursecode: "Please Enter Class Code"
 
             }

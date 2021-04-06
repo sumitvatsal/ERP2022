@@ -110,6 +110,7 @@
         <EntityTypeShape EntityType="SCHOOLERPModel.Tran_MachineRawPunch" Width="1.5" PointX="29.375" PointY="6.75" />
         <EntityTypeShape EntityType="SCHOOLERPModel.tblSchoolSm" Width="1.5" PointX="29.375" PointY="10.75" />
         <EntityTypeShape EntityType="SCHOOLERPModel.tblStudentdetailsClassToClass" Width="1.5" PointX="29.375" PointY="13.75" />
+        <EntityTypeShape EntityType="SCHOOLERPModel.tblTransportVehicalsDetail" Width="1.5" PointX="29.375" PointY="18.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

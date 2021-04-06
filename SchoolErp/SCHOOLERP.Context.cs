@@ -132,6 +132,7 @@ namespace SchoolErp
         public virtual DbSet<Tran_MachineRawPunch> Tran_MachineRawPunch { get; set; }
         public virtual DbSet<tblSchoolSm> tblSchoolSms { get; set; }
         public virtual DbSet<tblStudentdetailsClassToClass> tblStudentdetailsClassToClasses { get; set; }
+        public virtual DbSet<tblTransportVehicalsDetail> tblTransportVehicalsDetails { get; set; }
     
         public virtual int SalarySlipGenerate(Nullable<long> id, Nullable<long> gradeId, Nullable<long> employeeId, string month)
         {

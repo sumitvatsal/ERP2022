@@ -183,6 +183,9 @@ namespace SchoolErp.Models
         public tblSubjectTeacherAllocate sta { get; set; }
         public int Classid { get; set; }
         public string classname { get; set; }
+        public int SectionId { get; set; }
+        public string SectionName { get; set; }
+        public int TeacherId { get; set; }
 
     }
 
@@ -275,6 +278,7 @@ namespace SchoolErp.Models
         public string year { get; set; }
         public tblSyllabu hw { get; set; }
         public string msg { get; set; }
+       
     }
 
     public class feesAPP

@@ -8122,6 +8122,9 @@
     <Compile Include="tblTransportVehicalDetail.cs">
       <DependentUpon>SCHOOLERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblTransportVehicalsDetail.cs">
+      <DependentUpon>SCHOOLERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblTransRoute.cs">
       <DependentUpon>SCHOOLERP.tt</DependentUpon>
     </Compile>
@@ -8367,6 +8370,7 @@
     <Content Include="Views\AdminPanel\ConferenceRoom.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Views\TimeTable\SectionDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -12,18 +12,17 @@ namespace SchoolErp
     using System;
     using System.Collections.Generic;
     
-    public partial class tblSubjectTeacherAllocate
+    public partial class tblTransportVehicalsDetail
     {
-        public long ID { get; set; }
-        public long SubjectID { get; set; }
-        public int TeacherID { get; set; }
-        public bool Status { get; set; }
+        public int Id { get; set; }
+        public string VehicalNo { get; set; }
+        public string TotalSeats { get; set; }
+        public string AllowedSeats { get; set; }
+        public string OwnershipType { get; set; }
+        public string InsuranceDate { get; set; }
+        public string PollutionDate { get; set; }
+        public string TrackNumber { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<int> SchoolID { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
-        public Nullable<System.DateTime> Deleted_on { get; set; }
-        public string deletedby { get; set; }
-        public Nullable<int> classid { get; set; }
-        public Nullable<int> Section { get; set; }
-        public Nullable<int> SectionId { get; set; }
     }
 }

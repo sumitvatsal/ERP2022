@@ -79,7 +79,7 @@
           <Property Name="CurrActive" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblAdvertisingVedio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblAdvertisingVedio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblAdvertisingVedio">
           <Key>
             <PropertyRef Name="Id" />
@@ -147,7 +147,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblAdvertisingVedio' does not have a
           <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblCity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblCity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblCity">
           <Key>
             <PropertyRef Name="Id" />
@@ -195,6 +195,8 @@ warning 6002: The table/view 'SchoolERP.dbo.tblCity' does not have a primary key
           <Property Name="IsDeleted" Type="int" />
           <Property Name="Deleted_on" Type="datetime" />
           <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
+          <Property Name="ClassId" Type="int" />
+          <Property Name="SectionId" Type="int" />
         </EntityType>
         <EntityType Name="tblClassTimingDet">
           <Key>
@@ -213,6 +215,8 @@ warning 6002: The table/view 'SchoolERP.dbo.tblCity' does not have a primary key
           <Property Name="IsDeleted" Type="int" />
           <Property Name="Deleted_on" Type="datetime" />
           <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
+          <Property Name="TeacherId" Type="int" />
+          <Property Name="WeekDays" Type="int" />
         </EntityType>
         <EntityType Name="tblCountry">
           <Key>
@@ -277,7 +281,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblCity' does not have a primary key
           <Property Name="Status" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblDocument' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblDocument' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblDocument">
           <Key>
             <PropertyRef Name="Id" />
@@ -313,7 +317,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblDocument' does not have a primary
           <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblEmployee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblEmployee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblEmployee">
           <Key>
             <PropertyRef Name="Id" />
@@ -418,7 +422,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblEmployee' does not have a primary
           <Property Name="SchoolID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblEmployeeDocuments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblEmployeeDocuments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblEmployeeDocuments">
           <Key>
             <PropertyRef Name="Id" />
@@ -795,7 +799,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblEmployeeDocuments' does not have 
           <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblMaritalStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblMaritalStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblMaritalStatus">
           <Key>
             <PropertyRef Name="Id" />
@@ -1386,6 +1390,8 @@ warning 6002: The table/view 'SchoolERP.dbo.tblMaritalStatus' does not have a pr
           <Property Name="Deleted_on" Type="datetime" />
           <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
           <Property Name="classid" Type="int" />
+          <Property Name="Section" Type="int" />
+          <Property Name="SectionId" Type="int" />
         </EntityType>
         <EntityType Name="tblSubModule">
           <Key>
@@ -1422,15 +1428,23 @@ warning 6002: The table/view 'SchoolERP.dbo.tblMaritalStatus' does not have a pr
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolID" Type="int" />
+          <Property Name="empID" Type="int" />
           <Property Name="AcademicYear" Type="int" />
           <Property Name="Class" Type="int" />
-          <Property Name="FilePath" Type="varchar(max)" />
+          <Property Name="section" Type="varchar(max)" />
+          <Property Name="subject" Type="varchar(max)" />
+          <Property Name="teacher" Type="varchar(max)" />
+          <Property Name="N_book" Type="varchar(max)" />
+          <Property Name="pub" Type="varchar(max)" />
+          <Property Name="isbnnum" Type="varchar(max)" />
           <Property Name="Description" Type="varchar(max)" />
-          <Property Name="SchoolID" Type="int" />
+          <Property Name="FilePath" Type="varchar(max)" />
           <Property Name="IsDeleted" Type="int" />
           <Property Name="Deleted_on" Type="datetime" />
-          <Property Name="deletedby" Type="nvarchar" MaxLength="150" />
+          <Property Name="deletedby" Type="varchar(max)" />
           <Property Name="DateCreated" Type="datetime" />
+          <Property Name="btnAboutSyllabus" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tblTaskDetails">
           <Key>
@@ -1620,6 +1634,21 @@ warning 6002: The table/view 'SchoolERP.dbo.tblMaritalStatus' does not have a pr
           <Property Name="FitnessExpiryDate" Type="nvarchar" MaxLength="100" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="tblTransportVehicalsDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VehicalNo" Type="nvarchar" MaxLength="150" />
+          <Property Name="TotalSeats" Type="varchar" MaxLength="100" />
+          <Property Name="AllowedSeats" Type="nvarchar" MaxLength="100" />
+          <Property Name="OwnershipType" Type="nvarchar" MaxLength="150" />
+          <Property Name="InsuranceDate" Type="nvarchar" MaxLength="100" />
+          <Property Name="PollutionDate" Type="nvarchar" MaxLength="100" />
+          <Property Name="TrackNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="SchoolID" Type="int" />
+        </EntityType>
         <EntityType Name="tblTransRoute">
           <Key>
             <PropertyRef Name="Id" />
@@ -1684,7 +1713,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblMaritalStatus' does not have a pr
           <Property Name="Signature" Type="varchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.tblUserType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.tblUserType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblUserType">
           <Key>
             <PropertyRef Name="id" />
@@ -1703,7 +1732,7 @@ warning 6002: The table/view 'SchoolERP.dbo.tblUserType' does not have a primary
           <Property Name="DayID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'smartvidhyaCom.dbo.Tran_MachineRawPunch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Tran_MachineRawPunch">
           <Key>
             <PropertyRef Name="Tran_MachineRawPunchId" />
@@ -1947,6 +1976,7 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <EntitySet Name="tblTransportAllocation" EntityType="Self.tblTransportAllocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransportDriver" EntityType="Self.tblTransportDriver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransportVehicalDetails" EntityType="Self.tblTransportVehicalDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransportVehicalsDetail" EntityType="Self.tblTransportVehicalsDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransRoute" EntityType="Self.tblTransRoute" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblWeekDays" EntityType="Self.tblWeekDays" Schema="dbo" store:Type="Tables" />
@@ -2313,6 +2343,7 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <EntitySet Name="Tran_MachineRawPunch" EntityType="SCHOOLERPModel.Tran_MachineRawPunch" />
           <EntitySet Name="tblSchoolSms" EntityType="SCHOOLERPModel.tblSchoolSm" />
           <EntitySet Name="tblStudentdetailsClassToClasses" EntityType="SCHOOLERPModel.tblStudentdetailsClassToClass" />
+          <EntitySet Name="tblTransportVehicalsDetails" EntityType="SCHOOLERPModel.tblTransportVehicalsDetail" />
           </EntityContainer>
         <ComplexType Name="Sp_checkLeaveYearforEmployee_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2625,6 +2656,8 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <Property Name="IsDeleted" Type="Int32" />
           <Property Name="Deleted_on" Type="DateTime" Precision="3" />
           <Property Name="deletedby" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ClassId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
         </EntityType>
         <EntityType Name="tblClassTimingDet">
           <Key>
@@ -2643,6 +2676,8 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <Property Name="IsDeleted" Type="Int32" />
           <Property Name="Deleted_on" Type="DateTime" Precision="3" />
           <Property Name="deletedby" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="WeekDays" Type="Int32" />
         </EntityType>
         <EntityType Name="tblCountry">
           <Key>
@@ -3575,6 +3610,8 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <Property Name="Deleted_on" Type="DateTime" Precision="3" />
           <Property Name="deletedby" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="classid" Type="Int32" />
+          <Property Name="Section" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
         </EntityType>
         <EntityType Name="tblSubModule">
           <Key>
@@ -4069,8 +4106,16 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <Property Name="SchoolID" Type="Int32" />
           <Property Name="IsDeleted" Type="Int32" />
           <Property Name="Deleted_on" Type="DateTime" Precision="3" />
-          <Property Name="deletedby" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="deletedby" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="empID" Type="Int32" />
+          <Property Name="section" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="teacher" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="N_book" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pub" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isbnnum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="btnAboutSyllabus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblnewtimetable">
           <Key>
@@ -4227,6 +4272,21 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <Property Name="SectionName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Academicyear" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Stream" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblTransportVehicalsDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VehicalNo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TotalSeats" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AllowedSeats" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OwnershipType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="InsuranceDate" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PollutionDate" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TrackNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="SchoolID" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4590,6 +4650,8 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <EntitySetMapping Name="tblClassTimings">
             <EntityTypeMapping TypeName="SCHOOLERPModel.tblClassTiming">
               <MappingFragment StoreEntitySet="tblClassTiming">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="deletedby" ColumnName="deletedby" />
                 <ScalarProperty Name="Deleted_on" ColumnName="Deleted_on" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -4604,6 +4666,8 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <EntitySetMapping Name="tblClassTimingDets">
             <EntityTypeMapping TypeName="SCHOOLERPModel.tblClassTimingDet">
               <MappingFragment StoreEntitySet="tblClassTimingDet">
+                <ScalarProperty Name="WeekDays" ColumnName="WeekDays" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="deletedby" ColumnName="deletedby" />
                 <ScalarProperty Name="Deleted_on" ColumnName="Deleted_on" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -5597,6 +5661,8 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <EntitySetMapping Name="tblSubjectTeacherAllocates">
             <EntityTypeMapping TypeName="SCHOOLERPModel.tblSubjectTeacherAllocate">
               <MappingFragment StoreEntitySet="tblSubjectTeacherAllocate">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
                 <ScalarProperty Name="classid" ColumnName="classid" />
                 <ScalarProperty Name="deletedby" ColumnName="deletedby" />
                 <ScalarProperty Name="Deleted_on" ColumnName="Deleted_on" />
@@ -6094,6 +6160,14 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
           <EntitySetMapping Name="tblSyllabus">
             <EntityTypeMapping TypeName="SCHOOLERPModel.tblSyllabu">
               <MappingFragment StoreEntitySet="tblSyllabus">
+                <ScalarProperty Name="btnAboutSyllabus" ColumnName="btnAboutSyllabus" />
+                <ScalarProperty Name="isbnnum" ColumnName="isbnnum" />
+                <ScalarProperty Name="pub" ColumnName="pub" />
+                <ScalarProperty Name="N_book" ColumnName="N_book" />
+                <ScalarProperty Name="teacher" ColumnName="teacher" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="section" ColumnName="section" />
+                <ScalarProperty Name="empID" ColumnName="empID" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="deletedby" ColumnName="deletedby" />
                 <ScalarProperty Name="Deleted_on" ColumnName="Deleted_on" />
@@ -6271,6 +6345,22 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblTransportVehicalsDetails">
+            <EntityTypeMapping TypeName="SCHOOLERPModel.tblTransportVehicalsDetail">
+              <MappingFragment StoreEntitySet="tblTransportVehicalsDetail">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="TrackNumber" ColumnName="TrackNumber" />
+                <ScalarProperty Name="PollutionDate" ColumnName="PollutionDate" />
+                <ScalarProperty Name="InsuranceDate" ColumnName="InsuranceDate" />
+                <ScalarProperty Name="OwnershipType" ColumnName="OwnershipType" />
+                <ScalarProperty Name="AllowedSeats" ColumnName="AllowedSeats" />
+                <ScalarProperty Name="TotalSeats" ColumnName="TotalSeats" />
+                <ScalarProperty Name="VehicalNo" ColumnName="VehicalNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -6285,7 +6375,7 @@ warning 6002: The table/view 'SchoolERP.dbo.Tran_MachineRawPunch' does not have 
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

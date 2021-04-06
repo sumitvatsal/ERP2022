@@ -115,8 +115,8 @@
                         <td colspan="3"><span id="CTName1"></span></td>
                     </tr>
                     <tr>
-                        <th>Description</th>
-                        <td colspan="3"><span id="Desc"></span></td>
+                        <th style="display:none">Description</th>
+                        <td colspan="3" style="display:none"><span id="Desc"></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -127,61 +127,185 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><i class="fa fa-table"></i> Class Timing Details</h3>
                         <div class="box-tools">
-                            <a class="btn btn-success btn-sm" href="#" onclick="openModal()"><i class="fa fa-plus-square"></i> Add</a>
+
+                            <a style="display:none;" class="btn btn-success btn-sm" href="#" onclick="openModal()"><i class="fa fa-plus-square"></i> Add</a>
+                            @*<a class="btn btn-success btn-sm" href="#" Class Timing Detailonclick="openModal()"><i class="fa fa-plus-square"></i> Add</a>*@
                         </div>
                     </div>
                 </div>
+
                 <div class="box-body table-responsive">
                     <div id="w1" class="grid-view">
                         <table id="example1" class="table table-striped table-bordered">
                             <thead>
-                                <tr>
-                                    <th style="width:8%;">Sr no.</th>
-                                    <th>School</th>
-                                    <th>Name</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>IsBreak</th>
+                                <tr style="display:none">
+                                    <th>Days</th>
+                                    <th>Class Schedule</th>
                                     <th style="width:10%;">Action</th>
+                                    <th style="display:none;">Sr no.</th>
+                                    <th style="display:none">School Name</th>
+                                     <th style="display:none">Class Name</th>
+                                    <th style="display:none">Section Name</th>
+                                    <th style="display:none">Teacher Name</th>
+                                    <th style="display:none">Subject Name</th>
+                                    <th style="display:none">Start Time</th>
+                                    <th style="display:none">End Time</th>
+                                    <th style="display:none">IsBreak</th>
                                 </tr>
-                            </thead>
+                                </thead>
                             <tbody id="tbodyEmployeeDetails"></tbody>
                         </table>
                     </div>
                 </div>
                 <script type="text/html" id="divEmployeeDetailsJTemplte">
-                    {#foreach $T as Datashort}
+
                     <tr>
-                        <td style="width:10%;">
-                            { $T.Datashort.CountID}
+                        <th style="width:1%;">Days</th>
+                        <th style="width:25%;">Class Schedule</th>
+                        <th style="width:1%;">Action</th>
+
+                    </tr>
+                    <tr>
+                        <td class="ng-binding">
+                            Monday
                         </td>
                         <td>
-                            { $T.Datashort.School}
+                            {#foreach $T as Datashort}
+                            <button type="button" class="btn btn-default ng-binding">
+
+                                { $T.Datashort.period.Name}
+                                { $T.Datashort.period.StartTime}
+                                { $T.Datashort.period.EndTime}
+
+                            </button>
+                            {#/for}
                         </td>
                         <td>
-                            { $T.Datashort.period.Name}
-                        </td>
-                        <td>
-                            { $T.Datashort.period.StartTime}
-                        </td>
-                        <td>
-                            { $T.Datashort.period.EndTime}
-                        </td>
-                        @*<td type="hidden">
-                            { $T.Datashort.SchoolID}
-                        </td>*@
-                        <td style="width:15%;">
-                            <span class="{ $T.Datashort.style}">{ $T.Datashort.IsBreak}</span>
-                        </td>
-                        <td>
-                            <i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="Edit({ $T.Datashort.period.ID }, '{ $T.Datashort.period.Name}', ' { $T.Datashort.period.StartTime}', '{ $T.Datashort.period.EndTime}', { $T.Datashort.period.Status }, { $T.Datashort.period.IsBreak }, '{$T.Datashort.SchoolID}')" title="Edit"></i>
-                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete({ $T.Datashort.period.ID})" title="Delete"></i>
+                            <i class="fa fa-fw fa-plus" style="cursor:pointer" onclick="openModal()" title="Add"></i>
+                            <i class="fa fa-fw fa-edit" style="cursor:pointer" onclick="openModal()" title="Edit"></i>
+                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete()" title="Delete"></i>
+
                         </td>
                     </tr>
-                    {#/for}
+                    <tr>
+                        <td class="ng-binding">
+                            Tuesday
+                        </td>
+                        <td>
+                            {#foreach $T as Datashort}
+                            <button type="button" class="btn btn-default ng-binding">
+
+                                { $T.Datashort.period.Name}
+                                { $T.Datashort.period.StartTime}
+                                { $T.Datashort.period.EndTime}
+
+                            </button>
+                            {#/for}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-plus" style="cursor:pointer" onclick="openModal()" title="Add"></i>
+                            <i class="fa fa-fw fa-edit" style="cursor:pointer" onclick="openModal()" title="Edit"></i>
+                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete()" title="Delete"></i>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ng-binding">
+                            Wednesday
+                        </td>
+                        <td>
+                            {#foreach $T as Datashort}
+                            <button type="button" class="btn btn-default ng-binding">
+
+                                { $T.Datashort.period.Name}
+                                { $T.Datashort.period.StartTime}
+                                { $T.Datashort.period.EndTime}
+
+                            </button>
+                            {#/for}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-plus" style="cursor:pointer" onclick="openModal()" title="Add"></i>
+                            <i class="fa fa-fw fa-edit" style="cursor:pointer" onclick="openModal()" title="Edit"></i>
+                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete()" title="Delete"></i>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ng-binding">
+                            Thursday
+                        </td>
+                        <td>
+                            {#foreach $T as Datashort}
+                            <button type="button" class="btn btn-default ng-binding">
+
+                                { $T.Datashort.period.Name}
+                                { $T.Datashort.period.StartTime}
+                                { $T.Datashort.period.EndTime}
+
+                            </button>
+                            {#/for}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-plus" style="cursor:pointer" onclick="openModal()" title="Add"></i>
+                            <i class="fa fa-fw fa-edit" style="cursor:pointer" onclick="openModal()" title="Edit"></i>
+                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete()" title="Delete"></i>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ng-binding">
+                            Friday
+                        </td>
+                        <td>
+                            {#foreach $T as Datashort}
+                            <button type="button" class="btn btn-default ng-binding">
+
+                                { $T.Datashort.period.Name}
+                                { $T.Datashort.period.StartTime}
+                                { $T.Datashort.period.EndTime}
+
+                            </button>
+                            {#/for}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-plus" style="cursor:pointer" onclick="openModal()" title="Add"></i>
+                            <i class="fa fa-fw fa-edit" style="cursor:pointer" onclick="openModal()" title="Edit"></i>
+                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete()" title="Delete"></i>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ng-binding">
+                            Saturday
+                        </td>
+                        <td>
+                            {#foreach $T as Datashort}
+                            <button type="button" class="btn btn-default ng-binding">
+
+                                { $T.Datashort.period.Name}
+                                { $T.Datashort.period.StartTime}
+                                { $T.Datashort.period.EndTime}
+
+                            </button>
+                         {#/for}
+                        </td>
+                        <td>
+                            <i class="fa fa-fw fa-plus" style="cursor:pointer" onclick="openModal()" title="Add"></i>
+                            <i class="fa fa-fw fa-edit" style="cursor:pointer" onclick="openModal()" title="Edit"></i>
+                            <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete()" title="Delete"></i>
+
+                        </td>
+                    </tr>
+
+
                 </script>
             </div>
-        </div>
+                </div>
+               
+                
+           
+       
     </div>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -207,11 +331,44 @@
                                     <div class="help-block"></div>
                                 </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="form-group field-assignment-assignment_course_id required">
+                                    <label for="Country" class="req">Class <span class="requird">*</span></label>
+                                    <select class="form-control" id="ddlCourse" name="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group field-assignment-assignment_course_id required">
+                                    <label for="Country" class="req">Section <span class="requird">*</span></label>
+                                    <select class="form-control" id="ddlSection" name="ddlSection" valuefield="Id" textfield="SectionName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group field-assignment-assignment_course_id required">
+                                    <label for="Country" class="req">WeekDays <span class="requird">*</span></label>
+                                    <select class="form-control" id="ddlWeek" name="ddlWeek" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-12">
+
+                                <label class="control-label" for="assignment-assignment_course_id">Teacher <span class="requird">*</span></label>
+                                <select id="ddl_employees" name="ddl_employees" class="form-control" aria-required="true" valuefield="ID" textfield="Msg" blankRowValue="-1" blankRowText="----Select----"></select>
+
+                                <div class="help-block"></div>
+                            </div>
+
+
 
 
                             <div class="col-sm-12">
                                 <div class="form-group field-classtimingdetail-tctd_name required">
-                                    <label class="control-label" for="classtimingdetail-tctd_name">Name <span class="requird">*</span></label>
+                                    <label class="control-label" for="classtimingdetail-tctd_name">Subject<span class="requird">*</span></label>
                                     <input type="text" id="PeriodName" class="form-control" name="PeriodName" maxlength="150" aria-required="true">
 
                                     <div class="help-block"></div>
@@ -280,6 +437,9 @@
         callServiceMethodForDDl(JSON.stringify([loginuser, typeuser]), "/api/Default", "getAllSchoolName", "ddlSchoolName", false, "", "", "", "");
         //callServiceMethodForDDl("", "/api/Default", "getAllSchoolName", "ddlSchoolName", false, "", "", "", "");
         $('.timer').timepicker({ timeFormat: 'h:mm:ss p', startTime: new Date(0, 0, 0, 00, 0, 0), interval: 05 });
+        var SchoolID = (sessionStorage.getItem("SchoolID"));
+
+        callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/TimeTableApi", "GetEmpsbySchoolID", "ddl_employees", false, "", "", "", "");
         //timepicker.setSelectableTimes(generateTimepoints(1));
         // timePicker.setSelectableTimes(generateTimepoints(5));
         //timePicker.setSelectableTimes();
@@ -289,7 +449,11 @@
         //    showmeridian: false,
         //    defaulttime: false
         //    });
+       
+        var SchoolID = (sessionStorage.getItem("SchoolID"));
+        callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/StudentApi", "GetClassesbySchoolID", "ddlCourse", false, "", "", "", "");
 
+      
         var ID = getQuerystring("id");
         if (typeof (ID) != "undefined") {
             setControlValue("hdn", ID);//
@@ -300,6 +464,19 @@
 
     });
     function openModal() {
+        debugger;
+        var SchoolID = (sessionStorage.getItem("SchoolID"));
+        var ClassId = getQuerystring("ClassID");
+        var SectionId = getQuerystring("SectionId");
+        setControlValue("ddlCourse", ClassId);//
+        callServiceMethodForDDl(JSON.stringify([SchoolID, ClassId]), "/api/TimeTableApi", "GetSectionbySCHOOLidbyclass", "ddlSection", false, "", "", "", "");
+        callServiceMethodForDDl(JSON.stringify([SchoolID, ClassId, SectionId]), "/api/TimeTableApi", "GetTeacherbySchoolID", "ddl_employees", false, "", "", "", "");
+        callServiceMethodForDDl("", "/api/TimeTableApi", "GetWeekdays", "ddlWeek", false, "", "", "", "");
+        setControlValue("ddlSection", SectionId);//
+        //setControlValue("ddl_employees", SectionId);//
+        $("#ddlSchoolName").prop("disabled", true);
+        $("#ddlCourse").prop("disabled", true);
+        $("#ddlSection").prop("disabled", true);
         $('#myModal').modal('show');
     }
 
@@ -327,7 +504,8 @@
         setTimeout(function () {
             $("#loader").fadeIn();
             callJTemplateServiceMethod(JSON.stringify([x, loginuser, typeuser]), "/api/TimeTableApi", "GetClassTimingDet",
-                "tbodyEmployeeDetails", "divEmployeeDetailsJTemplte", true, successMsg, "", "", "");
+
+                 "tbodyEmployeeDetails", "divEmployeeDetailsJTemplte", true, successMsg, "", "", "");
 
         }, 800);
     }
@@ -341,6 +519,8 @@
 
     //
     $("#btnCreate").click(function () {
+        debugger;
+
         var is_break = 0;
         var status = 1;
         var name = getControlValue("PeriodName");
@@ -349,17 +529,21 @@
         var CT_id = getControlValue("hdn");
         var id = getControlValue("hdnID");
         var school = getControlValue("ddlSchoolName");
+        var Class = getControlValue("ddlCourse");
+        var Section = getControlValue("ddlSection");
+        var TeacherId = getControlValue("ddl_employees");
+        var WeekDays = getControlValue("ddlWeek");
         if ($("#is_break").is(':checked')) {
             is_break = 1;
         }
 
-        SaveDetails(id, CT_id, name, sTime, eTime, is_break, status, school);
+        SaveDetails(id, CT_id, name, sTime, eTime, is_break, status, school, Class, Section, TeacherId, WeekDays);
 
 
 
     });
 
-    function SaveDetails(id, CT_id, name, sTime, eTime, is_break, status, school) {
+    function SaveDetails(id, CT_id, name, sTime, eTime, is_break, status, school, Class, Section, TeacherId, WeekDays) {
         if ($("#class-timing-detail").valid()) {
             $("#loader").fadeIn();
             var brk = true;
@@ -374,7 +558,11 @@
                 IsBreak: brk,
                 CT_ID: CT_id,
                 Status: status,
-                SchoolID: school
+                SchoolID: school,
+                Class: Class,
+                Section: Section,
+                TeacherId: TeacherId,
+                WeekDays: WeekDays
             }
             var Student = {
                 ID: id,

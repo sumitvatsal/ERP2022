@@ -233,7 +233,7 @@
                     <i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="Edit({ $T.Datashort.hw.ID})" title="Edit"></i>
                 </td>
                 <td class="text-center">
-                    <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete({ $T.Datashort.hw.ID})" title="Edit"></i>
+                    <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete({ $T.Datashort.hw.ID})" title="Delete"></i>
                 </td>
             </tr>
             {#/for}
@@ -366,7 +366,7 @@
 
     function fillDataTable() {
 
-        debugger;
+       
         var Parameters = {
 
           //  val8: sessionStorage.getItem("stdID"),
@@ -452,6 +452,8 @@
     function Edit(id)
     
     {
+        debugger;
+
         window.location.href = "/Syllabus/CreateSyllabus?id=" + id;
     }
 

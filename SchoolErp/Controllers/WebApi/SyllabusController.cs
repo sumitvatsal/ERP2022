@@ -30,14 +30,10 @@ namespace SchoolErp.Controllers.WebApi
         [System.Web.Http.HttpPost]
         public syllabous123 CreateSyllabus1()
         {
-
             var model = new syllabous123();
             try
             {
                 int iUploadedCnt = 0;
-                //var type = "";
-                //  var docIDs = "";
-                //var docTex = "";
                 string[] d = { };
                 string[] dT = { };
                 int dcount = 0;
@@ -45,21 +41,23 @@ namespace SchoolErp.Controllers.WebApi
                 string sPath = "";
                 string relPath = "";
                 string doc_path = "";
-
-                NameValueCollection nvc = HttpContext.Current.Request.Form;
-
-                var hw = new tblSyllabu();
-               
-                // iterate through and map to strongly typed model
+                 NameValueCollection nvc = HttpContext.Current.Request.Form;
+                 var hw = new tblSyllabu();
+               // iterate through and map to strongly typed model
                 foreach (string kvp in nvc.AllKeys)
                 {
                     if (kvp == "ID")
                     {
                         hw.ID = Convert.ToInt32(nvc[kvp]);
                     }
-                    else if (kvp == "class")
+                    else if (kvp == "empID")
                     {
-                        hw.Class = Convert.ToInt32(nvc[kvp]);
+                        hw.empID = Convert.ToInt32(nvc[kvp]);
+                    }
+
+                    else if (kvp == "SchoolID")
+                    {
+                        hw.SchoolID = Convert.ToInt32(nvc[kvp]);
                     }
                    
                     else if (kvp == "academicYr")
@@ -67,28 +65,49 @@ namespace SchoolErp.Controllers.WebApi
                         hw.AcademicYear = Convert.ToInt32(nvc[kvp]);
                     }
                   
+                    else if (kvp == "class")
+                    {
+                        hw.Class = Convert.ToInt32(nvc[kvp]);
+                    }
+                    else if (kvp == "section")
+                    {
+                        hw.section = nvc[kvp];
+                    }
+                    else if (kvp == "file")
+                    {
+                        hw.FilePath = "www.smartvidhya.com";
+                    }
+                    else if (kvp == "subject")
+                    {
+                        hw.subject = nvc[kvp];
+                    }
+                    else if (kvp == "teacher")
+                    {
+                        hw.teacher = nvc[kvp];
+                    }
+                    else if (kvp == "N_book")
+                    {
+                        hw.N_book = nvc[kvp];
+                    }
+                    else if (kvp == "pub")
+                    {
+                        hw.pub = nvc[kvp];
+                    }
+                    else if (kvp == "isbnnum")
+                    {
+                        hw.isbnnum = nvc[kvp];
+                    }
                     else if (kvp == "desc")
                     {
                         hw.Description = nvc[kvp];
                     }
-                    
-                    //else if (kvp == "empID")
-                    //{
-                    //    hw.HW_givenBy = Convert.ToInt32(nvc[kvp]);
-                    //}
-                    else if (kvp == "SchoolID")
+                    else if (kvp == "btnAboutSyllabus")
                     {
-                        hw.SchoolID = Convert.ToInt32(nvc[kvp]);
+                        hw.btnAboutSyllabus = nvc[kvp];
                     }
-                    else if (kvp == "path")
-                    {
-                        doc_path = nvc[kvp];
-                    }
+
+
                 }
-              
-                //if (hw.AcademicYear != -1 && hw.Class != -1)
-                //{
-               
                     var check = db.tblSyllabus.Where(x => x.AcademicYear == hw.AcademicYear && x.Class == hw.Class && x.ID!=hw.ID && x.IsDeleted==null).FirstOrDefault();
                     if (check !=null)
                     {
@@ -96,27 +115,20 @@ namespace SchoolErp.Controllers.WebApi
                     }
                     else
                    {
-
-
-                    var a = db.tblAcademicYears.SingleOrDefault(x => x.ID == hw.AcademicYear && x.SchoolID == hw.SchoolID && x.IsDeleted==null);
-                    model.avademicyear = a.DateFrom.Year + "-" + a.DateTo.ToString("yy");
-                    var course = db.tblCourses.SingleOrDefault(x => x.Id == hw.Class && x.SchoolID == hw.SchoolID);
+                    var a = db.tblAcademicYears.FirstOrDefault(x => x.ID == hw.AcademicYear && x.SchoolID == hw.SchoolID && x.IsDeleted == null);
+                        model.avademicyear = a.DateFrom.Year + "-" + a.DateTo.ToString("yy");
+                    var course = db.tblCourses.FirstOrDefault(x => x.Id == hw.Class && x.SchoolID == hw.SchoolID);
                     model.Classname = course.CourseName;
-
-                    relPath = "/Images/Syllabus/" + model.avademicyear + "/" + model.Classname + "/";
+                      relPath = "/Images/Syllabus/" + model.avademicyear + "/" + model.Classname + "/";
                     sPath = System.Web.Hosting.HostingEnvironment.MapPath("~" + relPath);
                     Directory.CreateDirectory(sPath);
                     //}
-
-
-                    System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
-
-                    // CHECK THE FILE COUNT.
+                     System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
+                     // CHECK THE FILE COUNT.
                     for (int iCnt = 0; iCnt <= hfc.Count - 1; iCnt++)
                     {
                         System.Web.HttpPostedFile hpf = hfc[iCnt];
-
-                        if (hpf.ContentLength > 0)
+                          if (hpf.ContentLength > 0)
                         {
                             // CHECK IF THE SELECTED FILE(S) ALREADY EXISTS IN FOLDER. (AVOID DUPLICATE)
                             //if (!File.Exists(sPath + Path.GetFileName(hpf.FileName)))
@@ -130,8 +142,7 @@ namespace SchoolErp.Controllers.WebApi
                             doc_path = relPath + code + hpf.FileName;
                             //hw.FilePath = doc_path;
                             hw.FilePath = "http:/" + "/www.smartvidhya.com" + doc_path;
-
-                            if (File.Exists(document))
+                             if (File.Exists(document))
                             {
                                 File.Delete(document);
                             }
@@ -139,16 +150,12 @@ namespace SchoolErp.Controllers.WebApi
                             { }
                             hpf.SaveAs(document);
                             dcount = dcount + 1;
-
-
                             iUploadedCnt = iUploadedCnt + 1;
-
-                        }
+                           }
                     }
                     if (hw.ID == 0)
                     {
                         hw.DateCreated = DateTime.Now;
-
                         db.tblSyllabus.Add(hw);
                     }
                     else
@@ -159,20 +166,16 @@ namespace SchoolErp.Controllers.WebApi
                         hw_edit.AcademicYear = hw.AcademicYear;
                         hw_edit.Class = hw.Class;
                         hw_edit.DateCreated = DateTime.Now;
-
-
                     }
-
                     db.SaveChanges();
                     model.ID = hw.ID;
                     model.hw = hw;
-
-                }
+                   }
             }
-            catch (Exception e) { model.ID = -1; throw e; }
+            catch (Exception e)
+            { model.ID = -1; throw e; }
             return model;
-
-        }
+            }
 
         [System.Web.Http.Route("api/Syllabus/DeleteSyllabus")]
         [System.Web.Http.HttpPost]
@@ -408,7 +411,17 @@ namespace SchoolErp.Controllers.WebApi
                                   
                                 }).SingleOrDefault();
                     ct.Classname = rslt.crs.CourseName;
-                   
+                    //var sec = Convert.ToInt32(m.section);
+                    //var rslt1 = (
+                    //          from s in db.tblSections
+                    //          where s.Id == sec
+                    //          select new
+                    //          {
+                    //              crs1 = s
+
+                    //          }).SingleOrDefault();
+                    //ct.SectionName = rslt1.crs1.SectionName;
+
                     if (m.FilePath == null || m.FilePath == "")
                     {
                         ct.style = "";

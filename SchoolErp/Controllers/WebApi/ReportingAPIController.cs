@@ -463,7 +463,7 @@ where em.UserID='" + loginuser + "' and em.IsDeleted is null and st.IsDeleted is
             List<Student> list = new List<Student>();
 
 
-            string query = @"AcademicYear,RegistrationNo,JoiningDate,School,Class,Section,Stream,FirstName,MiddleName,LastName,DOB,Gender,BloodGroup,BirthPlace,Caste,AadharNo,Sms mobileNo,Email,Father Name,Father Mobile,Father Email,Father AdhaarNo,MotherName,Mother Mobile,Mother Email,Mother AdharNo,GuardianName,Guardian Mobile,Guardian AdharNo,Guardian Email,EmergencyNo,Emergency Contact Person,Status";
+            string query = @"AcademicYear,RegistrationNo,JoiningDate,School,Class,Section,Stream,FirstName,MiddleName,LastName,DOB,Gender,BloodGroup,BirthPlace,Caste,AadharNo,Sms mobileNo,Email,Father Name,Father Mobile,Father Email,Father AdhaarNo,MotherName,Mother Mobile,Mother Email,Mother AdharNo,GuardianName,Guardian Mobile,Guardian AdharNo,Guardian Email,EmergencyNo,Emergency Contact Person,Status,RollNo";
             string[] column = query.Split(',');
             for (int i = 0; i < column.Length; i++)
             {

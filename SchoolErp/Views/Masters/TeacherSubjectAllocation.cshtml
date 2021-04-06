@@ -113,39 +113,28 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="Country" class="req">School<span class="requird">*</span></label>
-                            <select class="form-control" id="ddlSchoolName" name="ddlSchoolName" ng-model="ddlSchoolName" valuefield="Id" textfield="Name"></select>
-
-
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label class="control-label">Subject</label>
-                                <select id="ddl_subjects" name="ddl_subjects" class="form-control" aria-required="true" valuefield="ID" textfield="Subject" blankRowValue="-1" blankRowText="----Select----"></select>
-                            </div>
-
-
-                        </div>
+                        <label for="Country" class="req">School<span class="requird">*</span></label>
+                        <select class="form-control" id="ddlSchoolName" name="ddlSchoolName" ng-model="ddlSchoolName" valuefield="Id" textfield="Name"></select>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
+                        <label for="Country" class="req">Class<span class="requird">*</span></label>
+                        <select class="form-control" name="ddlCourse1" id="ddlCourse1" valuefield="Id" textfield="CourseName" blankRowValue="0" blankRowText="----Select----"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Country" class="req">Section<span class="requird">*</span></label>
+                        <select class="form-control" name="ddlSection" id="ddlSection" valuefield="Id" textfield="SectionName" blankRowValue="0" blankRowText="----Select----"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Subject</label>
+                        <select id="ddl_subjects" name="ddl_subjects" class="form-control" aria-required="true" valuefield="ID" textfield="Subject" blankRowValue="-1" blankRowText="----Select----"></select>
+                    </div>
 
-                            <label for="Country" class="req">Class<span class="requird">*</span></label>
-                            <select class="form-control" name="ddlCourse1" id="ddlCourse1" valuefield="Id" textfield="CourseName" blankRowValue="0" blankRowText="----Select----"></select>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Teacher</label>
-                            <select id="ddl_employees" name="ddl_employees" class="form-control" aria-required="true" valuefield="ID" textfield="Msg" blankRowValue="-1" blankRowText="----Select----"></select>
-                        </div>
-
-
-
+                    <div class="col-sm-6">
+                        <label class="control-label">Teacher</label>
+                        <select id="ddl_employees" name="ddl_employees" class="form-control" aria-required="true" valuefield="ID" textfield="Msg" blankRowValue="-1" blankRowText="----Select----"></select>
                     </div>
 
                 </div>
-
             </div>
             <div class="box-footer">
                 <button type="button" id="btnSearch" class="btn btn-info" onclick="search()">Search</button>    <a class="btn btn-default" href="#" onclick="ResetAll()">Reset</a>
@@ -167,8 +156,9 @@
                             <tr>
                                 <th>#</th>
                                 <th>School</th>
-                                <th>Teacher </th>
                                 <th>Class</th>
+                               
+                                <th>Teacher </th>
                                 <th>Subject</th>
                                 <th class="action-column">Action</th>
                             </tr>
@@ -200,20 +190,25 @@
                         <td>
                             { $T.Datashort.School}
                         </td>
-                        <td>
-                            { $T.Datashort.TeacherName}
 
-                        </td>
                         <td>
                             { $T.Datashort.classname}
 
                         </td>
+                        @*<td>
+                            { $T.Datashort.SectionName}
+
+                        </td>*@
                         <td>
                             { $T.Datashort.subject}
                         </td>
+                        <td>
+                            { $T.Datashort.TeacherName}
+
+                        </td>
 
                         <td>
-                           
+
                             @*<i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="Edit({ $T.Datashort.ID},'{ $T.Datashort.con.Name}',{ $T.Datashort.con.Status})" title="Edit"></i>*@
                             <i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="Edit({ $T.Datashort.sta.TeacherID},'{ $T.Datashort.Course}','{ $T.Datashort.sta.Status}','{ $T.Datashort.Classid}',{ $T.Datashort.SchoolID})" title="Edit"></i>
                             <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete({ $T.Datashort.ID})" title="Delete"></i>
@@ -359,6 +354,16 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
+                                            <label for="Country" class="req">Class<span class="requird">*</span></label>
+                                            <select class="form-control" name="ddlCourse" id="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----"></select>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Country" class="req">Section<span class="requird">*</span></label>
+                                            <select class="form-control" name="ddlCourse" id="ddlSection1" valuefield="Id" textfield="SectionName" blankRowValue="-1" blankRowText="----Select----"></select>
+
+                                        </div>
+                                        <div class="form-group">
 
                                             <label class="control-label">Teacher</label>
                                             <select id="ddl_employee" name="ddl_employee" class="form-control" aria-required="true" valuefield="ID" textfield="Msg" blankRowValue="-1" blankRowText="----Select----"></select>
@@ -366,19 +371,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="Country" class="req">Class<span class="requird">*</span></label>
-                                    <select class="form-control" name="ddlCourse" id="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----"></select>
-
-                                </div>
+                               
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">Subjects</label>
                                             <select class="form-control select2" id="ddl_subs" name="ddl_subs" valuefield="ID" textfield="Subject" multiple="multiple" style="width:100% !important;" disabled></select>
                                             <div class="help-block"></div>
-                                            <label id="spmsg1"  />
+                                            <label id="spmsg1" />
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="row">
@@ -469,7 +471,15 @@
             if (ddlCourse != null && (ddlCourse != -1) && (ddlCourse != undefined)) {
                 var SchoolID = sessionStorage.getItem("SchoolID");
                 callServiceMethodForDDl(JSON.stringify([SchoolID, ddlCourse]), "/api/TimeTableApi", "GetSubjectsbySCHOOLidbyclass", "ddl_subjects", false, "", "", "", "");
-
+                callServiceMethodForDDl(JSON.stringify([SchoolID, ddlCourse]), "/api/TimeTableApi", "GetSectionbySCHOOLidbyclass", "ddlSection", false, "", "", "", "");
+            }
+        });
+        $("#ddlCourse").change(function () {
+            var ddlCourse = getControlValue("ddlCourse");
+            if (ddlCourse != null && (ddlCourse != -1) && (ddlCourse != undefined)) {
+                var SchoolID = sessionStorage.getItem("SchoolID");
+                
+                callServiceMethodForDDl(JSON.stringify([SchoolID, ddlCourse]), "/api/TimeTableApi", "GetSectionbySCHOOLidbyclass", "ddlSection1", false, "", "", "", "");
             }
         });
         fillDataTable();
@@ -558,7 +568,7 @@
 
     //
     $("#btnCreate").click(function () {
-       
+        debugger;
        
             if ($("#form1").valid()) {
                 var active = 0;
@@ -573,6 +583,7 @@
                 }
                 var SchoolID = getControlValue("ddlSchoolName1");
                 var ClassID = getControlValue("ddlCourse");
+                var SectionId = $("#ddlSection1").val();
                 var Items = new Array();
                 var Student = {
                     ID: getControlValue("hdnID"),
@@ -581,6 +592,7 @@
                     subject: subs,
                     SchoolID: SchoolID,
                     Classid: ClassID,
+                    SectionId:SectionId,
                     ViewType: "TeacherSubjectAllocation"
                 }
                 Items.push(Student);
@@ -777,14 +789,15 @@
 
     });
 
-    function Edit(id, subs, status,classid, SchoolId) {
+    function Edit(id, subs, status,classid, SchoolId,SectionName) {
         setControlValue("hdnID", 1);
         setControlValue("ddl_employee", id);
         setControlValue("ddlSchoolName1", SchoolId)
         setControlValue("ddlCourse", classid);
-        //setControlValue("ddlCourse", classid);
+        setControlValue("ddlSection", SectionName);
         var SchoolID = SchoolId;
         var CourseID = classid;
+        var SectionName = SectionName;
         callServiceMethodForDDl(JSON.stringify([SchoolID, CourseID]), "/api/TimeTableApi", "GetSubjectsbySCHOOLidbyclass", "ddl_subs", false, "", "", "", "");
         if (subs != null && subs != "") {
             var a = subs.split(',');

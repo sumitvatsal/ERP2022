@@ -2593,8 +2593,8 @@ namespace SchoolErp.Controllers.WebApi
             st.croscountrynameNm1 = s.CorsCountry;
             st.PermState1 = s.PermState;
             st.CorsState1 = s.CorsState;
-            st.PermCity1 = s.PermCity;
-            st.CorsCity1 = s.CorsCity;
+            //st.PermCity1 = s.PermCity;
+            //st.CorsCity1 = s.CorsCity;
             //if (s.PermCity != "" && s.PermCity != null && s.PermCity != "-1")
             //{
             //    tblCity city = db.tblCities.Find(Convert.ToInt32(s.PermCity));
@@ -2682,7 +2682,7 @@ namespace SchoolErp.Controllers.WebApi
             st.EmergencyNo = s.EmergencyNo;
             st.EmerContPerson = s.EmerContPerson;
             st.ContPersRelation = s.ContPersRelation;
-            st.SRNo = s.SRNo;
+            st.SRNo = s.RegNo;
             st.Status = s.Status;
             tblStatu stat = db.tblStatus.Find(s.Status);
             if (stat != null)

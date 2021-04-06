@@ -140,11 +140,14 @@
                                 <thead>
                                     <tr>
                                         <th style="width:8%;">Sr no.</th>
-                                        <th>School</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th style="display:none">School</th>
+                                        <th style="display:none">Name</th>
+                                        <th>Classname</th>
+                                        <th style="display:none">SectionName</th>
+                                         <th style="display:none" >Description</th>
                                         <th>Status</th>
                                         <th style="width:10%;">Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="tbodyEmployeeDetails"></tbody>
@@ -159,22 +162,40 @@
                     <td style="width:10%;">
                         { $T.Datashort.CountID}
                     </td>
-                    <td style="width:10%;">
-                        { $T.Datashort.School}
-                    </td>
+                    @*<td style="width:10%; display:none">
+            { $T.Datashort.School}
+        </td>*@
+                    @*<td>
+            <a href="#" title="View Details" onclick="GoToAddPeriods({ $T.Datashort.ID})">{ $T.Datashort.ct.Name}</a>
+
+        </td>*@
                     <td>
-                        <a href="#" title="View Details" onclick="GoToAddPeriods({ $T.Datashort.ID})">{ $T.Datashort.ct.Name}</a>
+                        { $T.Datashort.classname}
 
                     </td>
-                    <td>
+                    <td style="display:none">
+                        { $T.Datashort.ct.ClassId}
+
+                    </td>
+                    <td style="display:none">
+                        { $T.Datashort.ct.SectionId}
+
+                    </td>
+                    <td style="display:none">
+
+                        { $T.Datashort.SectionName}
+                    </td>
+                    <td style="display:none">
                         { $T.Datashort.ct.Description}
                     </td>
                     <td style="width:15%;">
                         <span class="{ $T.Datashort.style}" title="{ $T.Datashort.action}" onclick="EditStatus({ $T.Datashort.ID},'{ $T.Datashort.ct.Name}','{ $T.Datashort.ct.Description}',{ $T.Datashort.ct.Status},{ $T.Datashort.ct.SchoolID })">{ $T.Datashort.StatusNm} </span>
                     </td>
                     <td>
-                        <i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="Edit({ $T.Datashort.ID }, '{ $T.Datashort.ct.Name}', '{ $T.Datashort.ct.Description}', '{ $T.Datashort.ct.Status}', { $T.Datashort.ct.SchoolID })" title="Edit"></i>
-                        <i class="fa fa-fw fa-trash" style="cursor:pointer" onclick="Delete({ $T.Datashort.ID})" title="Delete"></i>
+                        @*<a style="display:none" href="#" title="Edit Details" onclick="GoToAddPeriods({ $T.Datashort.ID})">{ $T.Datashort.ct.Name}</a>
+            <i class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="GoToAddPeriods({ $T.Datashort.ID})">{ $T.Datashort.ct.Name} title="Edit"></i>*@
+                        <a href="#" title="Edit Details" class="fa fa-fw fa-pencil-square-o" style="cursor:pointer" onclick="GoToAddSectionId({$T.Datashort.ct.ClassId},{ $T.Datashort.ID})"></a>
+                        <i class="fa fa-fw fa-trash" style="display:none" onclick="Delete({ $T.Datashort.ID})" title="Delete"></i>
                     </td>
                 </tr>
                 {#/for}
@@ -211,8 +232,22 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="Country" class="req">School<span class="requird">*</span></label>
-                                    <select class="form-control" id="ddlSchoolName1" ng-model="ddlSchoolName1" valuefield="Id" textfield="Name" ></select>
+                                    <select class="form-control" id="ddlSchoolName1" ng-model="ddlSchoolName1" valuefield="Id" textfield="Name"></select>
 
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group field-assignment-assignment_course_id required">
+                                        <label class="control-label" for="assignment-assignment_course_id">Class <span class="requird">*</span></label>
+                                        <select class="form-control" id="ddlCourse" name="ddlCourse" valuefield="Id" textfield="CourseName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group field-assignment-assignment_course_id required">
+                                        <label class="control-label" for="assignment-assignment_course_id">Section <span class="requird">*</span></label>
+                                        <select class="form-control" id="ddlSection" name="ddlSection" valuefield="Id" textfield="SectionName" blankRowValue="-1" blankRowText="----Select----" aria-required="true"></select>
+                                        <div class="help-block"></div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Name: <span class="requird">*</span></label>
@@ -220,7 +255,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Description:</label>
-                                    <textarea class="form-control" rows="2" placeholder="Enter ..."  name="txtDesc" id="txtDesc"></textarea>
+                                    <textarea class="form-control" rows="2" placeholder="Enter ..." name="txtDesc" id="txtDesc"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input type="checkbox" checked="checked" id="cbActive" />&nbsp;Active
@@ -263,6 +298,8 @@
     $(document).ready(function () {
        
         $("#btnadd").click(function () {
+            var SchoolID = (sessionStorage.getItem("SchoolID"));
+            callServiceMethodForDDl(JSON.stringify([SchoolID]), "/api/StudentApi", "GetClassesbySchoolID", "ddlCourse", false, "", "", "", "");
            
         });
         //var empID=getQuerystring("id");
@@ -272,6 +309,16 @@
         //    //var empid=sessionStorage.getItem("EmpId");
 
         fillDataTable();
+        $("#ddlCourse").change(function () {
+            debugger;
+            var ddlCourse = getControlValue("ddlCourse");
+            if (ddlCourse != null && (ddlCourse != -1) && (ddlCourse != undefined)) {
+                var SchoolID = sessionStorage.getItem("SchoolID");
+               
+                callServiceMethodForDDl(JSON.stringify([SchoolID, ddlCourse]), "/api/TimeTableApi", "GetSectionbySCHOOLidbyclass", "ddlSection", false, "", "", "", "");
+            }
+
+        });
         //}
         //
         //callServiceMethodForDDl("", "/api/StudentApi", "GetLeaveStatus", "ddlReqStatus", false, "", "", "", "");
@@ -415,7 +462,9 @@
             var txt = getControlValue("txtDesc");
             var name = getControlValue("txtCTName");
             var id = getControlValue("hdn");
-           var SchoolID = $("#ddlSchoolName1").val()
+            var SchoolID = $("#ddlSchoolName1").val()
+            var ClassId = $("#ddlCourse").val()
+            var SectionId = $("#ddlSection").val()
             
 
             
@@ -423,7 +472,7 @@
                 status = 1;
             }
             if (name != undefined && name != undefined) {
-                SaveDetails(id, name, txt, status,SchoolID);
+                SaveDetails(id, name, txt, status, SchoolID,ClassId, SectionId);
 
 
             }
@@ -565,13 +614,15 @@
         SaveDetails(id, name, desc, st, SchoolID)
     }
 
-    function SaveDetails(id, name, txt, status,SchoolID) {
+    function SaveDetails(id, name, txt, status, SchoolID, ClassId, SectionId) {
         var Items = new Array();
         var classTiming = {
             Name: name,
             Description: txt,
             Status: status,
-            SchoolID: SchoolID
+            SchoolID: SchoolID,
+            ClassId: ClassId,
+            SectionId:SectionId
         }
         var Student = {
             ID: id,
@@ -631,9 +682,13 @@
             });
         }
     }
-
+    
+    function GoToAddSectionId(ClassId, ID) {
+      
+        window.location.href = "/TimeTable/SectionDetails?ClassId=" + ClassId + "&ID=" + ID;
+    }
     function GoToAddPeriods(id) {
-        window.location.href = "/TimeTable/ClassTimingDetails?id=" + id;
+        window.location.href = "/TimeTable/ClassTimingDetails?id=" + id ;
     }
 </script>
 

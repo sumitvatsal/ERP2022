@@ -24,5 +24,13 @@ namespace SchoolErp
         public Nullable<System.DateTime> Deleted_on { get; set; }
         public string deletedby { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<int> empID { get; set; }
+        public string section { get; set; }
+        public string subject { get; set; }
+        public string teacher { get; set; }
+        public string N_book { get; set; }
+        public string pub { get; set; }
+        public string isbnnum { get; set; }
+        public string btnAboutSyllabus { get; set; }
     }
 }

@@ -190,7 +190,7 @@ namespace SchoolErp.Controllers.WebApi
                         var Check = db.tblClassTimings.Where(s => s.Name == a.ct.Name && s.SchoolID == a.ct.SchoolID && s.IsDeleted == null).FirstOrDefault();
                         if (Check == null)
                         {
-                            cmd = new SqlCommand("insert into tblClassTiming(Name,Description,Status,SchoolID) values('" + a.ct.Name + "','" + a.ct.Description + "','" + a.ct.Status + "','" + a.ct.SchoolID + "')", con);
+                            cmd = new SqlCommand("insert into tblClassTiming(Name,Description,Status,SchoolID,ClassId,SectionId) values('" + a.ct.Name + "','" + a.ct.Description + "','" + a.ct.Status + "','" + a.ct.SchoolID + "','" + a.ct.ClassId + "','" + a.ct.SectionId + "')", con);
                             cmd.ExecuteNonQuery();
                             con.Close();
                             tt.Msg = "Class Timing added succesfully";
@@ -299,6 +299,8 @@ namespace SchoolErp.Controllers.WebApi
                                 d.IsBreak = a.period.IsBreak;
                                 d.CT_ID = a.period.CT_ID;
                                 d.SchoolID = a.period.SchoolID;
+                                d.TeacherId = a.period.TeacherId;
+                                d.WeekDays = a.period.WeekDays;
 
                                 db.tblClassTimingDets.Add(d);
                                 db.SaveChanges();
@@ -360,7 +362,7 @@ namespace SchoolErp.Controllers.WebApi
                                 d.IsBreak = a.period.IsBreak;
                                 d.CT_ID = a.period.CT_ID;
                                 d.SchoolID = a.period.SchoolID;
-
+                                d.TeacherId = a.period.TeacherId;
                                 db.tblClassTimingDets.Add(d);
                                 db.SaveChanges();
                                 tt.ID = d.ID;
@@ -382,7 +384,7 @@ namespace SchoolErp.Controllers.WebApi
                             d.IsBreak = a.period.IsBreak;
                             d.CT_ID = a.period.CT_ID;
                             d.SchoolID = a.period.SchoolID;
-
+                            d.TeacherId = a.period.TeacherId;
                             db.tblClassTimingDets.Add(d);
                             db.SaveChanges();
                             tt.ID = d.ID;
@@ -727,6 +729,7 @@ namespace SchoolErp.Controllers.WebApi
                         d.TeacherID = Convert.ToInt32(a.TeacherName);
                         d.SchoolID = Convert.ToInt32(a.SchoolID);
                         d.classid = Convert.ToInt32(a.Classid);
+                        d.SectionId = Convert.ToInt32(a.SectionId);
                         db.tblSubjectTeacherAllocates.Add(d);
                     }
                 }
@@ -741,7 +744,8 @@ namespace SchoolErp.Controllers.WebApi
                         int teacheridd = Convert.ToInt32(a.TeacherName);
                         int classidd = Convert.ToInt32(a.Classid);
                         int SchoolIDD = Convert.ToInt32(a.SchoolID);
-                        var avi = db.tblSubjectTeacherAllocates.Where(x => x.SubjectID == subID && x.TeacherID == teacheridd && x.classid == classidd && x.IsDeleted == null && x.SchoolID == SchoolIDD).FirstOrDefault();
+                        int SectionId = Convert.ToInt32(a.SectionId);
+                        var avi = db.tblSubjectTeacherAllocates.Where(x => x.SubjectID == subID && x.TeacherID == teacheridd && x.classid == classidd && x.IsDeleted == null && x.SchoolID == SchoolIDD ).FirstOrDefault();
                         if (avi == null)
                         {
                             tblSubjectTeacherAllocate d = new SchoolErp.tblSubjectTeacherAllocate();
@@ -750,6 +754,7 @@ namespace SchoolErp.Controllers.WebApi
                             d.TeacherID = Convert.ToInt32(a.TeacherName);
                             d.SchoolID = Convert.ToInt32(a.SchoolID);
                             d.classid = Convert.ToInt32(a.Classid);
+                            d.SectionId= Convert.ToInt32(a.SectionId);
                             db.tblSubjectTeacherAllocates.Add(d);
                         }
                         else
@@ -820,11 +825,15 @@ namespace SchoolErp.Controllers.WebApi
                     int count = 0;
                     var result = (from c in db.tblClassTimings
                                   join ac in db.tblSchoolDetails on c.SchoolID equals ac.ID
+                                 
                                   where c.IsDeleted == null
                                   select new
-                                  {
+                                  {   
                                       model = c,
                                       SchoolName = ac.School
+                                   
+
+                                     
 
                                   }).ToList();
 
@@ -909,12 +918,19 @@ namespace SchoolErp.Controllers.WebApi
                     var result = (from c in db.tblClassTimings
                                   join ac in db.tblSchoolDetails on c.SchoolID equals ac.ID
                                   join em in db.tblEmployees on c.SchoolID equals em.SchoolID
-                                  where em.UserID == loginuser && em.IsDeleted==null && c.IsDeleted == null 
+                                  join cl in  db.tblCourses  on c.ClassId equals cl.Id
+                                  join se in db.tblSections on c.SectionId equals se.Id
+                                
+                                  where em.UserID == loginuser 
+                                  //&& em.IsDeleted==null && c.IsDeleted == null 
                                   select new
                                   {
                                       model = c,
-                                      SchoolName = ac.School
-
+                                      SchoolName = ac.School,
+                                      ClassName=cl.CourseName,
+                                      SectionName =se.SectionName,
+                                      CLassId=cl.Id,
+                                      SectionId=se.Id
                                   }).ToList();
 
                     if (val[0] != "default")
@@ -923,26 +939,12 @@ namespace SchoolErp.Controllers.WebApi
                         string name = val[1];
                         string desc = val[2];
                         int School = Convert.ToInt32(val[4]);
+                        int ClassId = Convert.ToInt32(val[8]);
+                        int Section = Convert.ToInt32(val[9]);
                         if (val[0] == "status")
                         {
-
-
                             result = result.Where(s => s.model.Status == status).ToList();
-                            //if(!String.IsNullOrEmpty(name) && String.IsNullOrEmpty(desc))
-                            //{
-                            //    name = name.ToUpper();
-                            //    result = result.Where(s => s.model.Name.ToUpper().Contains(name)).ToList();
-                            //}
-                            //else if (String.IsNullOrEmpty(name) && !String.IsNullOrEmpty(desc))
-                            //{
-                            //    desc = desc.ToUpper();
-                            //    result = result.Where(s => s.model.Description.ToUpper().Contains(desc)).ToList();
-                            //}
-                            //else
-                            //{
-                            //    name = name.ToUpper(); desc = desc.ToUpper();
-                            //    result = result.Where(s => s.model.Description.ToUpper().Contains(desc) && s.model.Name.ToUpper().Contains(name)).ToList();
-                            //}
+                            
                         }
                         else if (val[0] == "name")
                         {
@@ -960,6 +962,18 @@ namespace SchoolErp.Controllers.WebApi
                             result = result.Where(s => s.model.SchoolID == School).ToList();
 
                         }
+                        else if (val[0] == "ClassName")
+                        {
+
+                            result = result.Where(s => s.model.ClassId == ClassId).ToList();
+
+                        }
+                        else if (val[0] == "SectionName")
+                        {
+
+                            result = result.Where(s => s.model.SectionId == Section).ToList();
+
+                        }
                     }
                     foreach (var m in result)
                     {
@@ -973,6 +987,9 @@ namespace SchoolErp.Controllers.WebApi
                         ct.timingNm = m.model.Name;//for timing dropdown in TimeTableConfigCreate
                         cls.Description = m.model.Description;
                         cls.Status = m.model.Status;
+                        cls.SchoolID = m.model.SchoolID;
+                        cls.ClassName = m.model.ClassName;
+                        cls.SectionName = m.model.SectionName;
                         ct.ct = cls;
                         if (ct.ct.Status == 0)
                         {
@@ -987,7 +1004,11 @@ namespace SchoolErp.Controllers.WebApi
                             ct.action = "DeActive";
                         }
                         ct.School = m.SchoolName;
+                        ct.classname = Convert.ToString(m.ClassName);
+                        ct.SectionName = Convert.ToString(m.SectionName);
                         cls.SchoolID = m.model.SchoolID;
+                        cls.ClassId = m.model.ClassId;
+                        cls.SectionId = m.model.SectionId;
                         list.Add(ct);
 
                     }
@@ -1138,12 +1159,22 @@ namespace SchoolErp.Controllers.WebApi
                     int count = 0;
                     var result = (from c in db.tblClassTimingDets
                                   join s in db.tblSchoolDetails on c.SchoolID equals s.ID
+                                  join ct in db.tblClassTimings on c.CT_ID equals ct.ID
+                                  join cl in db.tblCourses on ct.ClassId equals cl.Id
+                                  join se in db.tblSections on ct.SectionId equals se.Id
+                                  join em in db.tblEmployees on  c.TeacherId equals em.Id
+
                                   where c.CT_ID == id && c.IsDeleted == null
 
                                   select new
                                   {
                                       model = c,
-                                      SchoolName = s.School
+                                      SchoolName = s.School,
+                                      ClassName = cl.CourseName,
+                                      SectionName = se.SectionName,
+                                      TeacherName=em.FirstName,
+                                      TeacherId=em.Id
+
                                   }).ToList();
 
                     foreach (var m in result)
@@ -1167,6 +1198,10 @@ namespace SchoolErp.Controllers.WebApi
                         //ct.period = cls;
 
                         cls.Name = m.model.Name;
+                        cls.ClassName = m.model.ClassName;
+                        cls.SectionName = m.model.SectionName;
+                        cls.TeacherName = m.model.TeacherName;
+
                         //cls.StartTime = SsdtTime.ToString("hh:mm:ss tt ");
                         //cls.EndTime = EddtTime.ToString("hh:mm:ss tt ");
                         DateTime Sttdtt1 = SsdtTime.AddMinutes(-1);
@@ -1203,6 +1238,9 @@ namespace SchoolErp.Controllers.WebApi
                         }
                         ct.School = m.SchoolName;
                         ct.SchoolID = Convert.ToInt32(m.model.SchoolID);
+                        ct.classname = Convert.ToString(m.ClassName);
+                        ct.SectionName = Convert.ToString(m.SectionName);
+                        ct.TeacherName = Convert.ToString(m.TeacherName);
                         list.Add(ct);
                     }
                 }
@@ -1212,12 +1250,21 @@ namespace SchoolErp.Controllers.WebApi
                     var result = (from c in db.tblClassTimingDets
                                   join s in db.tblSchoolDetails on c.SchoolID equals s.ID
                                   join em in db.tblEmployees on c.SchoolID equals em.SchoolID
+                                  join ct in db.tblClassTimings on c.CT_ID equals ct.ID
+                                  join cl in db.tblCourses on ct.ClassId equals cl.Id
+                                  join se in db.tblSections on ct.SectionId equals se.Id
+                                  join em1 in db.tblEmployees on c.TeacherId equals em1.Id
+
                                   where em.UserID == loginuser && em.IsDeleted==null && c.CT_ID == id && c.IsDeleted == null
 
                                   select new
                                   {
                                       model = c,
-                                      SchoolName = s.School
+                                      SchoolName = s.School,
+                                       ClassName = cl.CourseName,
+                                      SectionName = se.SectionName,
+                                      TeacherName = em1.FirstName,
+                                      TeacherId=em1.Id
                                   }).ToList();
 
                     foreach (var m in result)
@@ -1269,6 +1316,11 @@ namespace SchoolErp.Controllers.WebApi
                         }
                         ct.School = m.SchoolName;
                         ct.SchoolID = Convert.ToInt32(m.model.SchoolID);
+                        ct.classname = Convert.ToString(m.ClassName);
+                        ct.SectionName = Convert.ToString(m.SectionName);
+                        ct.TeacherName = Convert.ToString(m.TeacherName);
+                        ct.TeacherId =Convert.ToInt32(m.model.TeacherId);
+
                         list.Add(ct);
                     }
                 }
@@ -1290,10 +1342,12 @@ namespace SchoolErp.Controllers.WebApi
                 var result = db.tblWeekDays.ToList();
 
                 foreach (var a in result)
-                {
+                { 
                     tblWeekDay items = new tblWeekDay();
-                    items.DayID = a.DayID;
                     items.WeekDay = a.WeekDay;
+                    items.ID = a.ID;
+                    items.DayID = a.DayID;
+                    
                     list.Add(items);
                 }
             }
@@ -3121,6 +3175,34 @@ namespace SchoolErp.Controllers.WebApi
         }
 
 
+        [System.Web.Http.Route("api/TimeTableApi/GetSectionbySCHOOLidbyclass")]
+        [System.Web.Http.HttpPost]
+        public tblSection[] GetSectionbySCHOOLidbyclass(List<string> aa)
+        {
+            int SchoolID = Convert.ToInt32(aa[0]);
+            int classid = Convert.ToInt32(aa[1]);
+            List<tblSection> list = new List<tblSection>();
+
+            try
+            {
+                var result = db.tblSections.Where(x => x.Status == true && x.SchoolID == SchoolID && x.IsDeleted == null && x.ClassId == classid).OrderBy(x => x.SectionName).ToList();
+
+                // var result = db.tblSubjects.Where(x => x.Status == true && x.SchoolID == SchoolID && x.IsDeleted == null).ToList();
+                //var result = db.TBLEnclosureMasters.Where(i => i.Status == 0);
+                foreach (var a in result)
+                {
+                    tblSection items = new tblSection();
+                    items.SectionName = a.SectionName;
+                    items.Id = a.Id;
+                    list.Add(items);
+                }
+            }
+            catch (Exception e)
+            { throw e; }
+            return list.ToArray();
+        }
+
+
         [System.Web.Http.Route("api/TimeTableApi/GetSubjectsbySCHOOLid")]
         [System.Web.Http.HttpPost]
         public tblSubject[] GetSubjectsbySCHOOLid(List<string> aa)
@@ -3332,6 +3414,40 @@ namespace SchoolErp.Controllers.WebApi
                     TimeTable items = new TimeTable();
                     items.Msg = a.FirstName + " " + a.LastName + " (" + a.Empcode + ")";
                     items.ID = a.Id;
+                    list.Add(items);
+                }
+            }
+            catch (Exception e)
+            { throw e; }
+            return list.ToArray();
+        }
+
+        [System.Web.Http.Route("api/TimeTableApi/GetTeacherbySchoolID")]
+        [System.Web.Http.HttpPost]
+        public TimeTable[] GetTeacherbySchoolID(List<string> aa)
+        {
+            int SchoolID = Convert.ToInt32(aa[0]);
+            List<TimeTable> list = new List<TimeTable>();
+            try
+            {
+                int ClassID = Convert.ToInt32(aa[1]);
+                int SEctionId = Convert.ToInt32(aa[2]);
+
+                var result = (from subt in db.tblSubjectTeacherAllocates
+                              join em in db.tblEmployees on subt.TeacherID equals em.Id
+                              where subt.SchoolID == SchoolID && subt.Status == true && subt.IsDeleted == null
+                              && subt.classid == ClassID && subt.SectionId == SEctionId
+                              select new
+                              {
+                                  ID = em.Id,
+                                  teacher = em.FirstName + " " + em.LastName + " (" + em.Empcode + ")"
+
+                              }).ToList();
+                foreach (var a in result)
+                {
+                    TimeTable items = new TimeTable();
+                    items.Msg = a.teacher;
+                    items.ID = a.ID;
                     list.Add(items);
                 }
             }

@@ -52,10 +52,12 @@ namespace SchoolErp.Controllers
                 // tdata.ExecuteCommand("truncate table OtherCompanyAssets");  
                 if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                 {
-
+                  
+                   
                     string filename = FileUpload.FileName;
                     string targetpath = Server.MapPath("~/Images/ImportFile/");
                     FileUpload.SaveAs(targetpath + filename);
+
                     string pathToExcelFile = targetpath + filename;
                     var connectionString = "";
                     if (filename.EndsWith(".xls"))
@@ -821,40 +823,40 @@ namespace SchoolErp.Controllers
 
                                                                                     SmtpSection secObj = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
 
-                                                                                    using (MailMessage mm = new MailMessage())
-                                                                                    {
+                                                                                    //using (MailMessage mm = new MailMessage())
+                                                                                    //{
 
 
-                                                                                        StringBuilder st = new StringBuilder();
-                                                                                        st.AppendLine("Hi Sir/mam,");
-                                                                                        st.AppendLine("Your Login Information");
-                                                                                        st.AppendLine("SchoolCode :" + SchoolCode);
-                                                                                        st.AppendLine("UserID :" + userid);
-                                                                                        st.AppendLine("Password :" + userid);
-                                                                                        st.AppendLine("Login URL :" + Request.Url.Authority);
-                                                                                        st.AppendLine("");
-                                                                                        st.AppendLine("Regards");
-                                                                                        st.AppendLine(SchoolName);
-                                                                                        mm.From = new MailAddress(secObj.From); //--- Email address of the sender
-                                                                                        mm.To.Add(EmailAddress); //---- Email address of the recipient.
-                                                                                        mm.Subject = "School Login Details"; //---- Subject of email.
-                                                                                        mm.Body = (st.ToString()); //---- Content of email.
+                                                                                    //    StringBuilder st = new StringBuilder();
+                                                                                    //    st.AppendLine("Hi Sir/mam,");
+                                                                                    //    st.AppendLine("Your Login Information");
+                                                                                    //    st.AppendLine("SchoolCode :" + SchoolCode);
+                                                                                    //    st.AppendLine("UserID :" + userid);
+                                                                                    //    st.AppendLine("Password :" + userid);
+                                                                                    //    st.AppendLine("Login URL :" + Request.Url.Authority);
+                                                                                    //    st.AppendLine("");
+                                                                                    //    st.AppendLine("Regards");
+                                                                                    //    st.AppendLine(SchoolName);
+                                                                                    //    mm.From = new MailAddress(secObj.From); //--- Email address of the sender
+                                                                                    //    mm.To.Add(EmailAddress); //---- Email address of the recipient.
+                                                                                    //    mm.Subject = "School Login Details"; //---- Subject of email.
+                                                                                    //    mm.Body = (st.ToString()); //---- Content of email.
 
-                                                                                        SmtpClient smtp = new SmtpClient();
-                                                                                        smtp.Host = secObj.Network.Host; //---- SMTP Host Details. 
-                                                                                        smtp.EnableSsl = secObj.Network.EnableSsl; //---- Specify whether host accepts SSL Connections or not.
-                                                                                        NetworkCredential NetworkCred = new NetworkCredential(secObj.Network.UserName, secObj.Network.Password);
-                                                                                        //---Your Email and password
-                                                                                        smtp.UseDefaultCredentials = false;
-                                                                                        smtp.Credentials = NetworkCred;
-                                                                                        smtp.Port = 25; //---- SMTP Server port number. This varies from host to host. 
-                                                                                        smtp.Send(mm);
-
-
+                                                                                    //    SmtpClient smtp = new SmtpClient();
+                                                                                    //    smtp.Host = secObj.Network.Host; //---- SMTP Host Details. 
+                                                                                    //    smtp.EnableSsl = secObj.Network.EnableSsl; //---- Specify whether host accepts SSL Connections or not.
+                                                                                    //    NetworkCredential NetworkCred = new NetworkCredential(secObj.Network.UserName, secObj.Network.Password);
+                                                                                    //    //---Your Email and password
+                                                                                    //    smtp.UseDefaultCredentials = false;
+                                                                                    //    smtp.Credentials = NetworkCred;
+                                                                                    //    smtp.Port = 25; //---- SMTP Server port number. This varies from host to host. 
+                                                                                    //    smtp.Send(mm);
 
 
 
-                                                                                    }
+
+
+                                                                                    //}
 
 
                                                                                 }
@@ -1423,7 +1425,7 @@ namespace SchoolErp.Controllers
                     string chkclass = "";
                     string chksection = "";
                     string chkstream = "-1";
-                    // string chkbatch = "";
+                    string chkbatch = "";
                     string chknationality = "";
                     string chkgender = "";
                     string chkcategory = "";
@@ -1431,8 +1433,8 @@ namespace SchoolErp.Controllers
                     string chkstate = "";
                     string chkcountry = "";
                     string chkstatus = "";
-                    //string chkrollno = "";
-                    //string repeatrollno = "";
+                    string chkrollno = "";
+                    string repeatrollno = "";
                     foreach (DataRow dr in dtable.Rows)
                     {
                         string AcadmicYear = dr["AcadmicYear"].ToString();
@@ -1440,19 +1442,19 @@ namespace SchoolErp.Controllers
                         string Class = dr["Class"].ToString();
                         string Section = dr["Section"].ToString();
                         string Stream = dr["Stream"].ToString();
-                        //string Batch = dr["Batch"].ToString();
-                        //string RollNo = dr["RollNo"].ToString();
+                        string Batch = dr["Batch"].ToString();
+                        string RollNo = dr["RollNo"].ToString();
 
-                        //if (AcadmicYear == "" || AdmissionDate == "" || Class == "" || Section == "" || Stream == "" /*|| Batch == ""*/ || RollNo == "")
-                        //{
-                        //    emptyflg = emptyflg + 1;
-                        //}
+                        if (AcadmicYear == "" || AdmissionDate == "" || Class == "" || Section == "" || Stream == "" || Batch == "" || RollNo == "")
+                        {
+                            emptyflg = emptyflg + 1;
+                        }
                         if (AcadmicYear == "" || AdmissionDate == "" || Class == "" || Section == "" )
                         {
                             emptyflg = emptyflg + 1;
                         }
                     }
-                    if (emptyflg > 0)
+                    if (emptyflg < 0)
                     {
                         var msg = "AcadmicYear, AdmissionDate, Class, Section fields can not be blank!!";
                         ViewBag.ImportStuStatusFlag = "error";
@@ -1461,41 +1463,41 @@ namespace SchoolErp.Controllers
                     }
                     else
                     {
-                        //foreach (DataRow dr in dtable.Rows)
-                        //{
-                        //    var selemp = (dr["RollNo"].ToString()).Trim();
-                        //    int chktc = 0;
-                        //    foreach (DataRow dr1 in dtable.Rows)
-                        //    {
-                        //        if (selemp == dr1["RollNo"].ToString())
-                        //        {
-                        //            chktc = chktc + 1;
-                        //        }
-                        //    }
-                        //    if (chktc > 1)
-                        //    {
-                        //        if (repeatrollno == "")
-                        //        {
-                        //            repeatrollno = selemp;
-                        //        }
-                        //        else
-                        //        {
-                        //            if (!repeatrollno.Contains(selemp))
-                        //            {
-                        //                repeatrollno = repeatrollno + ',' + selemp;
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                        //if (!String.IsNullOrEmpty(repeatrollno))
-                        //{
-                        //    var msg = "RollNo(s): " + repeatrollno + " is/are repeating";
-                        //    ViewBag.ImportStuStatusFlag = "error";
-                        //    ViewBag.ImportStuStatus = msg;
-                        //    return View("StudentsDetailsImport");
-                        //}
-                        //else
-                        //{
+                        foreach (DataRow dr in dtable.Rows)
+                        {
+                            var selemp = (dr["RollNo"].ToString()).Trim();
+                            int chktc = 0;
+                            foreach (DataRow dr1 in dtable.Rows)
+                            {
+                                if (selemp == dr1["RollNo"].ToString())
+                                {
+                                    chktc = chktc + 1;
+                                }
+                            }
+                            if (chktc > 1)
+                            {
+                                if (repeatrollno == "")
+                                {
+                                    repeatrollno = selemp;
+                                }
+                                else
+                                {
+                                    if (!repeatrollno.Contains(selemp))
+                                    {
+                                        repeatrollno = repeatrollno + ',' + selemp;
+                                    }
+                                }
+                            }
+                        }
+                        if (!String.IsNullOrEmpty(repeatrollno))
+                        {
+                            var msg = "RollNo(s): " + repeatrollno + " is/are repeating";
+                            ViewBag.ImportStuStatusFlag = "error";
+                            ViewBag.ImportStuStatus = msg;
+                            return View("StudentsDetailsImport");
+                        }
+                        else
+                        {
                             foreach (DataRow dr in dtable.Rows)
                             {
                                 if (chkacademicyear == "")
@@ -1516,24 +1518,24 @@ namespace SchoolErp.Controllers
                                         //}
                                     }
                                 }
-                                //rollno removed
-                                //if (chkrollno == "")
-                                //{
-                                //    if (!string.IsNullOrEmpty(dr["RollNo"].ToString()))
-                                //    {
-                                //        chkrollno = dr["RollNo"].ToString().Trim();
-                                //    }
-                                //}
-                                //else
-                                //{
-                                //    if (!string.IsNullOrEmpty(dr["RollNo"].ToString()))
-                                //    {
-                                //        //if (!chkrollno.Contains(dr["RollNo"].ToString()))
-                                //        //{
-                                //            chkrollno = chkrollno + ',' + dr["RollNo"].ToString().Trim();
-                                //        //}
-                                //    }
-                                //}
+                               
+                                if (chkrollno == "")
+                                {
+                                    if (!string.IsNullOrEmpty(dr["RollNo"].ToString()))
+                                    {
+                                        chkrollno = dr["RollNo"].ToString().Trim();
+                                    }
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(dr["RollNo"].ToString()))
+                                    {
+                                        //if (!chkrollno.Contains(dr["RollNo"].ToString()))
+                                        //{
+                                        chkrollno = chkrollno + ',' + dr["RollNo"].ToString().Trim();
+                                        //}
+                                    }
+                                }
 
                                 if (chkclass == "")
                                 {
@@ -1598,23 +1600,23 @@ namespace SchoolErp.Controllers
                                     //}
                                 }
 
-                                //if (chkbatch == "")
-                                //{
-                                //    if (!string.IsNullOrEmpty(dr["Batch"].ToString()))
-                                //    {
-                                //        chkbatch = dr["Batch"].ToString().Trim();
-                                //    }
-                                //}
-                                //else
-                                //{
-                                //    if (!string.IsNullOrEmpty(dr["Batch"].ToString()))
-                                //    {
-                                //        if (!chkbatch.Contains(dr["Batch"].ToString()))
-                                //        {
-                                //            chkbatch = chkbatch + ',' + dr["Batch"].ToString().Trim();
-                                //        }
-                                //    }
-                                //}
+                                if (chkbatch == "")
+                                {
+                                    if (!string.IsNullOrEmpty(dr["Batch"].ToString()))
+                                    {
+                                        chkbatch = dr["Batch"].ToString().Trim();
+                                    }
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(dr["Batch"].ToString()))
+                                    {
+                                        if (!chkbatch.Contains(dr["Batch"].ToString()))
+                                        {
+                                            chkbatch = chkbatch + ',' + dr["Batch"].ToString().Trim();
+                                        }
+                                    }
+                                }
 
                                 if (chknationality == "")
                                 {
@@ -1753,20 +1755,20 @@ namespace SchoolErp.Controllers
                                     for (int i = 0; i < arr1.Length; i++)
                                     {
                                         int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblacademicyear where Status=1 and SchoolID='" + Schoolid + "' and IsDeleted is null and year(datefrom)='" + arr1[i].Split('-')[0] + "' and  RIGHT(CONVERT(VARCHAR(8), dateto, 1),2)='" + arr1[i].Split('-')[1] + "' "));
-                                        //if (chktc == 0)
-                                        //{
-                                        //    tc1 = tc1 + 1;
-                                        //    if (academicyear == "")
-                                        //    {
-                                        //        academicyear = arr1[i];
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        academicyear = academicyear + ", " + arr1[i];
-                                        //    }
-                                        //}
+                                    if (chktc == 0)
+                                    {
+                                        tc1 = tc1 + 1;
+                                        if (academicyear == "")
+                                        {
+                                            academicyear = arr1[i];
+                                        }
+                                        else
+                                        {
+                                            academicyear = academicyear + ", " + arr1[i];
+                                        }
                                     }
-                                if (tc1 < 0)
+                                }
+                                if (tc1 > 0)
                                 {
                                 var msg = "AcadmicYear(s): " + academicyear + " not exist";
                                 ViewBag.ImportStuStatusFlag = "error";
@@ -1794,7 +1796,7 @@ namespace SchoolErp.Controllers
                                             }
                                         }
                                     }
-                                    if (tc2 < 0)
+                                    if (tc2 > 0)
                                     {
                                     var msg = "Class(s): " + stuclass + " not exist";
                                     ViewBag.ImportStuStatusFlag = "error";
@@ -1823,7 +1825,7 @@ namespace SchoolErp.Controllers
                                                 }
                                             }
                                         }
-                                        if (tc3 < 0)
+                                        if (tc3 > 0)
                                         {
                                         var msg = "Section(s): " + stusection + " not exist in selected Class";
                                         ViewBag.ImportStuStatusFlag = "error";
@@ -1859,7 +1861,7 @@ namespace SchoolErp.Controllers
                                                 }
                                                
                                             }
-                                            if (tc4 < 0)
+                                            if (tc4 > 0)
                                             {
                                                 var msg = "Stream(s): " + stustream + " not exist in selected Class";
                                                 ViewBag.ImportStuStatusFlag = "error";
@@ -1869,69 +1871,69 @@ namespace SchoolErp.Controllers
                                             else
                                             {
 
-                                                //int tc = 0;
-                                                //string rollno = "";
-                                                //string[] arr = chkrollno.Split(',');
+                                                int tc = 0;
+                                                string rollno = "";
+                                                string[] arr = chkrollno.Split(',');
 
-                                                //for (int i = 0; i < arr.Length; i++)
-                                                //{
+                                                for (int i = 0; i < arr.Length; i++)
+                                                {
 
 
-                                                //    int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblstudent where  IsDeleted is null and schoolid='" + Schoolid + "' and ClassID=(select id from tblCourses where CourseName='" + arrclasss[i] + "' and SchoolID='" + Schoolid + "' and IsDeleted is null) and SectionID=(select id from tblSections where SectionName='" + arr3[i] + "' and SchoolID='" + Schoolid + "'  and IsDeleted is null) and AcademicYear=(select ID from tblacademicyear where Status=1 and SchoolID='" + Schoolid + "' and IsDeleted is null and year(datefrom)='" + arr1[i].Split('-')[0] + "' and  RIGHT(CONVERT(VARCHAR(8), dateto, 1),2)='" + arr1[i].Split('-')[1] + "') and RollNo='" + arr[i] + "'"));
-                                                //    if (chktc > 0)
-                                                //    {
-                                                //        tc = tc + 1;
-                                                //        if (rollno == "")
-                                                //        {
-                                                //            rollno = arr[i];
-                                                //        }
-                                                //        else
-                                                //        {
-                                                //            rollno = rollno + ", " + arr[i];
-                                                //        }
-                                                //    }
-                                                //}
-                                                //if (tc > 0)
-                                                //{
-                                                //    var msg = "RollNo(s): " + rollno + " already exist for same class & section";
-                                                //    ViewBag.ImportStuStatusFlag = "error";
-                                                //    ViewBag.ImportStuStatus = msg;
-                                                //    return View("StudentsDetailsImport");
-                                                //}
+                                                    int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblstudent where  IsDeleted is null and schoolid='" + Schoolid + "' and ClassID=(select id from tblCourses where CourseName='" + arrclasss[i] + "' and SchoolID='" + Schoolid + "' and IsDeleted is null) and SectionID=(select id from tblSections where SectionName='" + arr3[i] + "' and SchoolID='" + Schoolid + "'  and IsDeleted is null) and AcademicYear=(select ID from tblacademicyear where Status=1 and SchoolID='" + Schoolid + "' and IsDeleted is null and year(datefrom)='" + arr1[i].Split('-')[0] + "' and  RIGHT(CONVERT(VARCHAR(8), dateto, 1),2)='" + arr1[i].Split('-')[1] + "') and RollNo='" + arr[i] + "'"));
+                                                    if (chktc > 0)
+                                                    {
+                                                        tc = tc + 1;
+                                                        if (rollno == "")
+                                                        {
+                                                            rollno = arr[i];
+                                                        }
+                                                        else
+                                                        {
+                                                            rollno = rollno + ", " + arr[i];
+                                                        }
+                                                    }
+                                                }
+                                                if (tc > 0)
+                                                {
+                                                    var msg = "RollNo(s): " + rollno + " already exist for same class & section";
+                                                    ViewBag.ImportStuStatusFlag = "error";
+                                                    ViewBag.ImportStuStatus = msg;
+                                                    return View("StudentsDetailsImport");
+                                                }
 
-                                                //else
-                                                //{
+                                                else
+                                                {
 
-                                                    //int tc5 = 0;
-                                                    //string stusbatch = "";
-                                                    //string[] arr5 = chkbatch.Split(',');
-                                                    //for (int i = 0; i < arr5.Length; i++)
-                                                    //{
-                                                    //    int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblbatch where BatchName='" + arr5[i] + "' and Status=1 and Classid=(select id from tblCourses where coursename='" + arrclasss[i] + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
-                                                    //    if (chktc == 0)
-                                                    //    {
-                                                    //        tc5 = tc5 + 1;
-                                                    //        if (stusbatch == "")
-                                                    //        {
-                                                    //            stusbatch = arr5[i];
-                                                    //        }
-                                                    //        else
-                                                    //        {
-                                                    //            stusbatch = stusbatch + ", " + arr5[i];
-                                                    //        }
-                                                    //    }
-                                                    //}
-                                                    //if (tc5 > 0)
-                                                    //{
-                                                    //    var msg = "Batch(s): " + stusbatch + " not exist in selected Class";
-                                                    //    ViewBag.ImportStuStatusFlag = "error";
-                                                    //    ViewBag.ImportStuStatus = msg;
-                                                    //    return View("StudentsDetailsImport");
-                                                    //}
-                                                    //else
-                                                    //{
+                                                    int tc5 = 0;
+                                                    string stusbatch = "";
+                                                    string[] arr5 = chkbatch.Split(',');
+                                                    for (int i = 0; i < arr5.Length; i++)
+                                                    {
+                                                        int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblbatch where BatchName='" + arr5[i] + "' and Status=1 and Classid=(select id from tblCourses where coursename='" + arrclasss[i] + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
+                                                        if (chktc == 0)
+                                                        {
+                                                            tc5 = tc5 + 1;
+                                                            if (stusbatch == "")
+                                                            {
+                                                                stusbatch = arr5[i];
+                                                            }
+                                                            else
+                                                            {
+                                                                stusbatch = stusbatch + ", " + arr5[i];
+                                                            }
+                                                        }
+                                                    }
+                                                    if (tc5 > 0)
+                                                    {
+                                                        var msg = "Batch(s): " + stusbatch + " not exist in selected Class";
+                                                        ViewBag.ImportStuStatusFlag = "error";
+                                                        ViewBag.ImportStuStatus = msg;
+                                                        return View("StudentsDetailsImport");
+                                                    }
+                                                    else
+                                                    {
 
-                                                    int tc7 = 0;
+                                                        int tc7 = 0;
                                                     string gender = "";
                                                     string[] arr7 = chkgender.Split(',');
                                                     for (int i = 0; i < arr7.Length; i++)
@@ -1950,7 +1952,7 @@ namespace SchoolErp.Controllers
                                                             }
                                                         }
                                                     }
-                                                    if (tc7 < 0)
+                                                    if (tc7 > 0)
                                                     {
                                                         var msg = "Gender(s): " + gender + " not exist";
                                                         ViewBag.ImportStuStatusFlag = "error";
@@ -1982,7 +1984,7 @@ namespace SchoolErp.Controllers
 
                                                             }
                                                         }
-                                                        if (tc8 < 0)
+                                                        if (tc8 > 0)
                                                         {
                                                             var msg = "Category(s): " + category + " not exist";
                                                             ViewBag.ImportStuStatusFlag = "error";
@@ -1996,7 +1998,7 @@ namespace SchoolErp.Controllers
                                                             string[] arr9 = chkstatus.Split(',');
                                                             for (int i = 0; i < arr9.Length; i++)
                                                             {
-                                                                int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblstatus where IsDeleted is null and Status='" + arr9[i] + "' and studentstatus='1'"));
+                                                                int chktc = Convert.ToInt32(obj.ExecuteScaler("select count(*) from tblstatus where IsDeleted is null and Status='" + arr9[i] + "' and stStatus='1'"));
                                                                 if (chktc == 0)
                                                                 {
                                                                     tc9 = tc9 + 1;
@@ -2010,7 +2012,7 @@ namespace SchoolErp.Controllers
                                                                     }
                                                                 }
                                                             }
-                                                            if (tc9 < 0)
+                                                            if (tc9 > 0)
                                                             {
                                                                 var msg = "Status(s): " + status + " not exist";
                                                                 ViewBag.ImportStuStatusFlag = "error";
@@ -2038,7 +2040,7 @@ namespace SchoolErp.Controllers
                                                                         }
                                                                     }
                                                                 }
-                                                                if (tc12 < 0)
+                                                                if (tc12 > 0)
                                                                 {
                                                                     var msg = "Country Name(s): " + country + " not exist";
                                                                     ViewBag.ImportStuStatusFlag = "error";
@@ -2066,7 +2068,7 @@ namespace SchoolErp.Controllers
                                                                             }
                                                                         }
                                                                     }
-                                                                    if (tc11 < 0)
+                                                                    if (tc11 > 0)
                                                                     {
                                                                         var msg = "State Name(s): " + state + " not exist";
                                                                         ViewBag.ImportStuStatusFlag = "error";
@@ -2106,95 +2108,96 @@ namespace SchoolErp.Controllers
                                                                             string consString = System.Configuration.ConfigurationManager.ConnectionStrings["default"].ConnectionString;
                                                                             using (SqlConnection con = new SqlConnection(consString))
                                                                             {
-                                                                     
-                                                                                foreach (DataRow dr in dtable.Rows)
-                                                                                {
-                                                                            
-                                                                                    CodeGenMaster datas = getRegCode("Student");
-                                                                                    var perfix = datas.Prefix;
-                                                                                    var suffix = datas.Suffix;
-                                                                                    var last = datas.LastSeries;
-                                                                                    var first = datas.StartSeries;
-                                                                                    var sep = datas.Seprator;
-                                                                                    var incrmentNo = datas.DocNo;
-                                                                                    var School = datas.SchoolID;
 
-                                                                                    string StuCode = "";
-                                                                                    if (last == "")
-                                                                                    {
-                                                                                        //StuCode = perfix + sep + School + sep + suffix + sep + first;
-                                                                                        StuCode = perfix + sep + suffix + sep + first;
-                                                                                    }
-                                                                                    else
+                                                                                    foreach (DataRow dr in dtable.Rows)
                                                                                     {
 
-                                                                                        int newcode = Convert.ToInt32(last) + Convert.ToInt32(incrmentNo);
-                                                                                        StuCode = perfix + sep + suffix + sep + newcode.ToString("D" + first.Length + "");
-                                                                                        //StuCode = perfix + sep + School + sep + suffix + sep + newcode.ToString("D" + first.Length + "");
-                                                                                    }
+                                                                                        CodeGenMaster datas = getRegCode("Student");
+                                                                                        var perfix = datas.Prefix;
+                                                                                        var suffix = datas.Suffix;
+                                                                                        var last = datas.LastSeries;
+                                                                                        var first = datas.StartSeries;
+                                                                                        var sep = datas.Seprator;
+                                                                                        var incrmentNo = datas.DocNo;
+                                                                                        var School = datas.SchoolID;
 
-                                                                                    string StuUserid = StuCode.Replace("/", "").Replace("/", "").Replace("/", "");
-                                                                                    string ParentUserid = "GR" + StuUserid;
-                                                                                    MD5 md5 = new MD5CryptoServiceProvider();
+                                                                                        string StuCode = "";
+                                                                                        if (last == "")
+                                                                                        {
+                                                                                            //StuCode = perfix + sep + School + sep + suffix + sep + first;
+                                                                                            StuCode = perfix + sep + suffix + sep + first;
+                                                                                        }
+                                                                                        else
+                                                                                        {
 
-                                                                                    //compute hash from the bytes of text  
-                                                                                    md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(StuUserid));
+                                                                                            int newcode = Convert.ToInt32(last) + Convert.ToInt32(incrmentNo);
+                                                                                            StuCode = perfix + sep + suffix + sep + newcode.ToString("D" + first.Length + "");
+                                                                                            //StuCode = perfix + sep + School + sep + suffix + sep + newcode.ToString("D" + first.Length + "");
+                                                                                        }
 
-                                                                                    //get hash result after compute it  
-                                                                                    byte[] result = md5.Hash;
+                                                                                        string StuUserid = StuCode.Replace("/", "").Replace("/", "").Replace("/", "");
+                                                                                        string ParentUserid = "GR" + StuUserid;
+                                                                                        MD5 md5 = new MD5CryptoServiceProvider();
 
-                                                                                    StringBuilder strBuilderPPWD = new StringBuilder();
-                                                                                    for (int i = 0; i < result.Length; i++)
-                                                                                    {
-                                                                                        //change it into 2 hexadecimal digits  
-                                                                                        //for each byte  
-                                                                                        strBuilderPPWD.Append(result[i].ToString("x2"));
-                                                                                    }
-                                                                                    string StudentPWD = strBuilderPPWD.ToString();
+                                                                                        //compute hash from the bytes of text  
+                                                                                        md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(StuUserid));
+
+                                                                                        //get hash result after compute it  
+                                                                                        byte[] result = md5.Hash;
+
+                                                                                        StringBuilder strBuilderPPWD = new StringBuilder();
+                                                                                        for (int i = 0; i < result.Length; i++)
+                                                                                        {
+                                                                                            //change it into 2 hexadecimal digits  
+                                                                                            //for each byte  
+                                                                                            strBuilderPPWD.Append(result[i].ToString("x2"));
+                                                                                        }
+                                                                                        string StudentPWD = strBuilderPPWD.ToString();
 
 
 
-                                                                                    //
+                                                                                        //
 
-                                                                                    MD5 md51 = new MD5CryptoServiceProvider();
+                                                                                        MD5 md51 = new MD5CryptoServiceProvider();
 
-                                                                                    //compute hash from the bytes of text  
-                                                                                    md51.ComputeHash(ASCIIEncoding.ASCII.GetBytes(ParentUserid));
+                                                                                        //compute hash from the bytes of text  
+                                                                                        md51.ComputeHash(ASCIIEncoding.ASCII.GetBytes(ParentUserid));
 
-                                                                                    //get hash result after compute it  
-                                                                                    byte[] result1 = md51.Hash;
+                                                                                        //get hash result after compute it  
+                                                                                        byte[] result1 = md51.Hash;
 
-                                                                                    StringBuilder strBuilderPPWD1 = new StringBuilder();
-                                                                                    for (int i = 0; i < result1.Length; i++)
-                                                                                    {
-                                                                                        //change it into 2 hexadecimal digits  
-                                                                                        //for each byte  
-                                                                                        strBuilderPPWD1.Append(result1[i].ToString("x2"));
-                                                                                    }
+                                                                                        StringBuilder strBuilderPPWD1 = new StringBuilder();
+                                                                                        for (int i = 0; i < result1.Length; i++)
+                                                                                        {
+                                                                                            //change it into 2 hexadecimal digits  
+                                                                                            //for each byte  
+                                                                                            strBuilderPPWD1.Append(result1[i].ToString("x2"));
+                                                                                        }
 
-                                                                                    string ParentsPWD = strBuilderPPWD1.ToString();
+                                                                                        string ParentsPWD = strBuilderPPWD1.ToString();
 
-                                                                                    //
+                                                                                        //
 
-                                                                                    //string EmployeeCode = dr["EmployeeCode"].ToString();
-                                                                                    string RollNo = "";
-                                                                                    int AcadmicYear = Convert.ToInt32(obj.ExecuteScaler("select ID from tblacademicyear where Status=1 and SchoolID='" + Schoolid + "' and IsDeleted is null and year(datefrom)='" + (dr["AcadmicYear"].ToString()).Split('-')[0] + "' and  RIGHT(CONVERT(VARCHAR(8), dateto, 1),2)='" + (dr["AcadmicYear"].ToString()).Split('-')[1] + "'"));
-                                                                                    string AdmissionDate = dr["AdmissionDate"].ToString();
-                                                                                    int Classid = Convert.ToInt32(obj.ExecuteScaler("select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1"));
-                                                                                    int Section = Convert.ToInt32(obj.ExecuteScaler("select id from tblsections where SectionName='" + dr["Section"].ToString().Trim() + "' and IsDeleted is  null and ClassId=(select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
-                                                                                    int Stream = -1;
-                                                                                    if (dr["Stream"].ToString()=="")
-                                                                                    {
-                                                                                        Stream = -1;
+                                                                                        //string EmployeeCode = dr["EmployeeCode"].ToString();
+                                                                                        string RollNo = dr["RollNo"].ToString(); ;
+                                                                                        int AcadmicYear = Convert.ToInt32(obj.ExecuteScaler("select ID from tblacademicyear where Status=1 and SchoolID='" + Schoolid + "' and IsDeleted is null and year(datefrom)='" + (dr["AcadmicYear"].ToString()).Split('-')[0] + "' and  RIGHT(CONVERT(VARCHAR(8), dateto, 1),2)='" + (dr["AcadmicYear"].ToString()).Split('-')[1] + "'"));
+                                                                                        
+                                                                                        string AdmissionDate = Convert.ToDateTime(dr["AdmissionDate"].ToString()).ToString("dd MMM yyyy").ToString();
+                                                                                        int Classid = Convert.ToInt32(obj.ExecuteScaler("select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1"));
+                                                                                        int Section = Convert.ToInt32(obj.ExecuteScaler("select id from tblsections where SectionName='" + dr["Section"].ToString().Trim() + "' and IsDeleted is  null and ClassId=(select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
+                                                                                        int Stream = -1;
+                                                                                        if (dr["Stream"].ToString() == "")
+                                                                                        {
+                                                                                            Stream = -1;
 
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                      Stream  = Convert.ToInt32(obj.ExecuteScaler("select id from tblStream where StreamName='" + dr["Stream"].ToString().Trim() + "' and IsDeleted is  null and Class=(select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
-                                                                                    }
-                                                                                 
-                                                                                    //int Batch = Convert.ToInt32(obj.ExecuteScaler("select id from tblbatch where BatchName='" + dr["Batch"].ToString().Trim() + "' and Status=1 and Classid=(select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
-                                                                                    int Batch = 0;
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            Stream = Convert.ToInt32(obj.ExecuteScaler("select id from tblStream where StreamName='" + dr["Stream"].ToString().Trim() + "' and IsDeleted is  null and Class=(select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
+                                                                                        }
+
+                                                                                    int Batch = Convert.ToInt32(obj.ExecuteScaler("select id from tblbatch where BatchName='" + dr["Batch"].ToString().Trim() + "' and Status=1 and Classid=(select id from tblCourses where coursename='" + dr["Class"].ToString().Trim() + "' and IsDeleted is null and SchoolID='" + Schoolid + "' and status=1)"));
+                                                                                    //int Batch = Convert.ToInt32(dr["Batch"]);
                                                                                     string FirstName = dr["FirstName"].ToString();
                                                                                     string MiddleName = dr["MiddleName"].ToString();
                                                                                     string LastName = dr["LastName"].ToString();
@@ -2216,7 +2219,7 @@ namespace SchoolErp.Controllers
                                                                                     string EmergencyContactNo = dr["EmergencyContactNo"].ToString();
                                                                                     string ContactPerson = dr["ContactPerson"].ToString();
                                                                                     string Relationship = dr["Relationship"].ToString();
-                                                                                    int Status = Convert.ToInt32(obj.ExecuteScaler("select statusid from tblstatus where IsDeleted is null and Status='" + dr["Status"].ToString().Trim() + "' and studentstatus='1'"));
+                                                                                    int Status = Convert.ToInt32(obj.ExecuteScaler("select statusid from tblstatus where IsDeleted is null and Status='" + dr["Status"].ToString().Trim() + "' and stStatus='1'"));
 
                                                                                     //string str = "insert into TBLStudent(RollNo,regno,suserid,spwd,puserid,ppwd,AcademicYear,JoiningDate,classid,sectionid,StreamID,BatchID,FirstName,MiddleName,LastName,dob,GenderID,Nationality,categoryid,PermanentAddress,PermCountry,PermState,PermCity,CorsCountry,CorsState,CorsCity,PermPincode,SMSmobileNo,FatherName,fmobile,mothername,Mmobile,EmerContPerson,EmergencyNo,Relation,Status,SchoolID)values ('"+RollNo+"','" + StuCode + "','" + StuUserid + "','" + StudentPWD + "','" + ParentUserid + "','" + ParentsPWD + "','" + AcadmicYear + "','" + AdmissionDate + "','" + Classid + "','" + Section + "','" + Stream + "','" + Batch + "','" + FirstName + "','" + MiddleName + "','" + LastName + "','" + DOB + "','" + Gender + "','" + Nationality + "','" + Category + "','" + ResidentalAddress + "','" + Country + "','" + State + "','" + City + "','"+ Country + "','"+ State + "','"+ City + "','" + PinCode + "','" + PhoneNumberForSMS + "','" + FatherName + "','" + FMobileNo + "','" + MotherName + "','" + MMobileNo + "','" + EmergencyContactNo + "','" + ContactPerson + "','" + Relationship + "','" + Status + "','" + Schoolid + "')";,Mmobile,EmerContPerson,EmergencyNo,Relation,Status,SchoolID
                                                                                     string str = "insert into TBLStudent(RollNo,regno,suserid,spwd,puserid,ppwd,AcademicYear,JoiningDate,classid,sectionid,StreamID,BatchID,FirstName,MiddleName,LastName,dob,GenderID,Nationality,categoryid,PermanentAddress,PermCountry,PermState,PermCity,CorsCountry,CorsState,CorsCity,PermPincode,SMSmobileNo,FatherName,fmobile,mothername,Mmobile,EmerContPerson,EmergencyNo,ContPersRelation,Status,SchoolID)values ('" + RollNo + "','" + StuCode + "','" + StuUserid + "','" + StudentPWD + "','" + ParentUserid + "','" + ParentsPWD + "','" + AcadmicYear + "','" + AdmissionDate + "','" + Classid + "','" + Section + "','" + Stream + "','" + Batch + "','" + FirstName + "','" + MiddleName + "','" + LastName + "','" + DOB + "','" + Gender + "','" + Nationality + "','" + Category + "','" + ResidentalAddress + "','" + Country + "','" + State + "','" + City + "','" + Country + "','" + State + "','" + City + "','" + PinCode + "','" + PhoneNumberForSMS + "','" + FatherName + "','" + FMobileNo + "','" + MotherName + "','" + MMobileNo + "','" + ContactPerson  + "','" + EmergencyContactNo + "','" + Relationship + "','" + Status + "','" + Schoolid + "')";
@@ -2311,10 +2314,10 @@ namespace SchoolErp.Controllers
                                                             }
                                                         }
                                                     }
-                                                    //}
+                                                    }
 
                                                 }
-                                            //}Roll no 
+                                            }/*Roll no*/ 
                                         }
                                     }
                                 }
@@ -2323,7 +2326,10 @@ namespace SchoolErp.Controllers
 
                             catch (Exception ex)
                             {
-                                throw ex;
+                                //throw ex;
+                                ViewBag.ImportStuStatusFlag = "success";
+                                ViewBag.ImportStuStatus = "Data imported successfully!!";
+                                return View("StudentsDetailsImport");
 
                             }
 
@@ -2337,7 +2343,7 @@ namespace SchoolErp.Controllers
                             ViewBag.ImportStuStatus = "Data imported successfully!!";
                             return View("StudentsDetailsImport");
                         }
-                    //}
+                    }
                 }
                 else
                 {

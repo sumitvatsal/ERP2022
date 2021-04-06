@@ -27,5 +27,10 @@ namespace SchoolErp
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<System.DateTime> Deleted_on { get; set; }
         public string deletedby { get; set; }
+        public Nullable<int> TeacherId { get; set; }
+        public Nullable<int> WeekDays { get; set; }
+        public string SectionName { get; set; }
+        public string ClassName { get; set; }
+        public string TeacherName { get; set; }
     }
 }

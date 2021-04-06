@@ -126,7 +126,7 @@
                             <div class="help-block"></div>
                         </div>
                     </div>
-                    <div class="col-sm-4" id="rollnohide">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label" for="empinfosearch-emp_designation_id">Roll No</label>
                             <input type="text" id="txtRollno" class="form-control" placeholder="Enter Roll No">
@@ -193,7 +193,7 @@
                                     <th style="display:none" class="Class">Class</th>
                                     <th style="display:none" class="Section">Section</th>
                                     <th style="display:none" class="School">School</th>
-                                    @*<th style="display:none" class="RollNo">Roll No</th>*@
+                                    <th style="display:none" class="RollNo">Roll No</th>
                                     <th style="display:none" class="DOB">DOB</th>
                                     <th style="display:none" class="Status">Status</th>
                                     <th style="display:none" class="Sms mobileNo">Mobile No</th>
@@ -259,9 +259,9 @@
                 <td style="display:none" class="School">
                     { $T.Datashort.School}
                 </td>
-                @*<td style="display:none" class="RollNo">
+                <td style="display:none" class="RollNo">
                     { $T.Datashort.RollNo}
-                </td>*@
+                </td>
                 <td style="display:none" class="DOB">
                     { $T.Datashort.SDOB}
                 </td>
@@ -388,7 +388,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#rollnohide").hide();
+        debugger;
+        //$("#rollnohide").show();
         var loginuser = (sessionStorage.getItem("userId"));
         var typeuser = sessionStorage.getItem("type");
         callServiceMethodForDDl(JSON.stringify([loginuser, typeuser]), "/api/Default", "getAllSchoolName", "ddlSchoolName", false, "", "", "", "");
